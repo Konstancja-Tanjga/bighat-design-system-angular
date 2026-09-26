@@ -1,0 +1,138 @@
+{
+  "$description": "Dark theme. Colour roles only - every non-colour semantic is shared, because a theme that changes spacing is not a theme.",
+  "surface": {
+    "base": {
+      "$value": "{color.neutral.900}"
+    },
+    "sunken": {
+      "$value": "{color.neutral.900}"
+    },
+    "raised": {
+      "$value": "{color.neutral.800}"
+    },
+    "overlay": {
+      "$value": "{color.neutral.800}"
+    },
+    "inverse": {
+      "$value": "{color.neutral.0}"
+    }
+  },
+  "text": {
+    "primary": {
+      "$value": "{color.neutral.50}"
+    },
+    "secondary": {
+      "$value": "{color.neutral.300}"
+    },
+    "muted": {
+      "$value": "{color.neutral.400}"
+    },
+    "inverse": {
+      "$value": "{color.neutral.900}"
+    },
+    "onAccent": {
+      "$value": "{color.neutral.900}"
+    },
+    "link": {
+      "$value": "{color.blue.300}"
+    }
+  },
+  "border": {
+    "subtle": {
+      "$value": "{color.neutral.700}"
+    },
+    "strong": {
+      "$value": "{color.neutral.500}"
+    },
+    "focus": {
+      "$value": "{color.blue.400}"
+    }
+  },
+  "action": {
+    "primary": {
+      "bg": {
+        "$value": "{color.blue.400}"
+      },
+      "bgHover": {
+        "$value": "{color.blue.300}"
+      },
+      "bgActive": {
+        "$value": "{color.blue.200}"
+      },
+      "fg": {
+        "$value": "{color.neutral.900}"
+      }
+    },
+    "secondary": {
+      "bg": {
+        "$value": "{color.neutral.800}"
+      },
+      "bgHover": {
+        "$value": "{color.neutral.700}"
+      },
+      "fg": {
+        "$value": "{color.neutral.50}"
+      },
+      "border": {
+        "$value": "{color.neutral.500}"
+      }
+    },
+    "critical": {
+      "bg": {
+        "$value": "{color.red.400}"
+      },
+      "bgHover": {
+        "$value": "{color.red.300}"
+      },
+      "fg": {
+        "$value": "{color.neutral.900}"
+      }
+    }
+  },
+  "status": {
+    "info": {
+      "bg": {
+        "$value": "{color.neutral.800}"
+      },
+      "fg": {
+        "$value": "{color.blue.300}"
+      },
+      "border": {
+        "$value": "{color.blue.700}"
+      }
+    },
+    "success": {
+      "bg": {
+        "$value": "{color.neutral.800}"
+      },
+      "fg": {
+        "$value": "{color.green.300}"
+      },
+      "border": {
+        "$value": "{color.green.700}"
+      }
+    },
+    "warning": {
+      "bg": {
+        "$value": "{color.neutral.800}"
+      },
+      "fg": {
+        "$value": "{color.amber.300}"
+      },
+      "border": {
+        "$value": "{color.amber.700}"
+      }
+    },
+    "critical": {
+      "bg": {
+        "$value": "{color.neutral.800}"
+      },
+      "fg": {
+        "$value": "{color.red.300}"
+      },
+      "border": {
+        "$value": "{color.red.700}"
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+/*
+ * The whole appearance of the library.
+ *
+ * Eight stylesheets, not forty-five: this library implements eight components,
+ * and shipping the other thirty-seven would assert a coverage it does not have.
+ * They are byte-identical to their React counterparts today and free to
+ * diverge tomorrow — which is what the repository split traded for.
+ *
+ * Every component sets ViewEncapsulation.None and declares no styles of its
+ * own, so this file is the only place a rule exists.
+ */
+@import '../../dist/tokens.css';
+@import './base.css';
+@import './components/Button.css';
+@import './components/Checkbox.css';
+@import './components/Dialog.css';
+@import './components/Input.css';
+@import './components/Select.css';
+@import './components/StateBlock.css';
+@import './components/Table.css';
+@import './components/Toast.css';

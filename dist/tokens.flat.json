@@ -1,0 +1,480 @@
+{
+  "$schema": "https://tr.designtokens.org/format/2025.10/",
+  "generated": "scripts/build-tokens.mjs",
+  "tokens": {
+    "surface.base": {
+      "type": "color",
+      "light": "#ffffff",
+      "dark": "#14181c"
+    },
+    "surface.sunken": {
+      "type": "color",
+      "light": "#f7f8f9",
+      "dark": "#14181c"
+    },
+    "surface.raised": {
+      "type": "color",
+      "light": "#ffffff",
+      "dark": "#252b32"
+    },
+    "surface.overlay": {
+      "type": "color",
+      "light": "#ffffff",
+      "dark": "#252b32"
+    },
+    "surface.inverse": {
+      "type": "color",
+      "light": "#14181c",
+      "dark": "#ffffff"
+    },
+    "text.primary": {
+      "type": "color",
+      "light": "#14181c",
+      "dark": "#f7f8f9"
+    },
+    "text.secondary": {
+      "type": "color",
+      "light": "#39414a",
+      "dark": "#c5ccd3"
+    },
+    "text.muted": {
+      "type": "color",
+      "light": "#59636f",
+      "dark": "#9aa4af"
+    },
+    "text.inverse": {
+      "type": "color",
+      "light": "#ffffff",
+      "dark": "#14181c"
+    },
+    "text.onAccent": {
+      "type": "color",
+      "light": "#ffffff",
+      "dark": "#14181c"
+    },
+    "text.link": {
+      "type": "color",
+      "light": "#2148c9",
+      "dark": "#8fb0ff"
+    },
+    "border.subtle": {
+      "type": "color",
+      "light": "#dfe3e7",
+      "dark": "#39414a",
+      "description": "Decorative only - dividers, table rules. Not held to 3:1 by design."
+    },
+    "border.strong": {
+      "type": "color",
+      "light": "#6b7683",
+      "dark": "#6b7683",
+      "description": "Boundary of an interactive control. Held to 3:1."
+    },
+    "border.focus": {
+      "type": "color",
+      "light": "#3563e9",
+      "dark": "#5b87fb"
+    },
+    "action.primary.bg": {
+      "type": "color",
+      "light": "#3563e9",
+      "dark": "#5b87fb"
+    },
+    "action.primary.bgHover": {
+      "type": "color",
+      "light": "#2148c9",
+      "dark": "#8fb0ff"
+    },
+    "action.primary.bgActive": {
+      "type": "color",
+      "light": "#1a39a1",
+      "dark": "#bcd0ff"
+    },
+    "action.primary.fg": {
+      "type": "color",
+      "light": "#ffffff",
+      "dark": "#14181c"
+    },
+    "action.secondary.bg": {
+      "type": "color",
+      "light": "#ffffff",
+      "dark": "#252b32"
+    },
+    "action.secondary.bgHover": {
+      "type": "color",
+      "light": "#eef0f2",
+      "dark": "#39414a"
+    },
+    "action.secondary.fg": {
+      "type": "color",
+      "light": "#252b32",
+      "dark": "#f7f8f9"
+    },
+    "action.secondary.border": {
+      "type": "color",
+      "light": "#6b7683",
+      "dark": "#6b7683"
+    },
+    "action.critical.bg": {
+      "type": "color",
+      "light": "#c02a2f",
+      "dark": "#f87171"
+    },
+    "action.critical.bgHover": {
+      "type": "color",
+      "light": "#a31f24",
+      "dark": "#fca5a5"
+    },
+    "action.critical.fg": {
+      "type": "color",
+      "light": "#ffffff",
+      "dark": "#14181c"
+    },
+    "status.info.bg": {
+      "type": "color",
+      "light": "#eef4ff",
+      "dark": "#252b32"
+    },
+    "status.info.fg": {
+      "type": "color",
+      "light": "#1a39a1",
+      "dark": "#8fb0ff"
+    },
+    "status.info.border": {
+      "type": "color",
+      "light": "#bcd0ff",
+      "dark": "#1a39a1"
+    },
+    "status.success.bg": {
+      "type": "color",
+      "light": "#ecfdf5",
+      "dark": "#252b32"
+    },
+    "status.success.fg": {
+      "type": "color",
+      "light": "#0a573b",
+      "dark": "#6ee7b7"
+    },
+    "status.success.border": {
+      "type": "color",
+      "light": "#a7f3d0",
+      "dark": "#0a573b"
+    },
+    "status.warning.bg": {
+      "type": "color",
+      "light": "#fffbeb",
+      "dark": "#252b32"
+    },
+    "status.warning.fg": {
+      "type": "color",
+      "light": "#7c4a10",
+      "dark": "#fcd34d"
+    },
+    "status.warning.border": {
+      "type": "color",
+      "light": "#fde68a",
+      "dark": "#7c4a10"
+    },
+    "status.critical.bg": {
+      "type": "color",
+      "light": "#fef2f2",
+      "dark": "#252b32"
+    },
+    "status.critical.fg": {
+      "type": "color",
+      "light": "#a31f24",
+      "dark": "#fca5a5"
+    },
+    "status.critical.border": {
+      "type": "color",
+      "light": "#fecaca",
+      "dark": "#a31f24"
+    },
+    "control.sm": {
+      "type": "dimension",
+      "light": "28px",
+      "dark": "28px",
+      "description": "Control height, small. Was a literal in semantic.ts before 4.0."
+    },
+    "control.md": {
+      "type": "dimension",
+      "light": "36px",
+      "dark": "36px",
+      "description": "Control height, default."
+    },
+    "control.lg": {
+      "type": "dimension",
+      "light": "44px",
+      "dark": "44px",
+      "description": "Control height, large - the WCAG 2.5.5 touch target."
+    },
+    "control.indicator": {
+      "type": "dimension",
+      "light": "16px",
+      "dark": "16px",
+      "description": "Added in 4.0. The drawn box or dot of a checkbox, radio or switch - the part the real input is visually replaced by. It was a 16px literal in three stylesheets, and its absence meant every value derived from it (a hint indent, a label offset) had to be precomputed by hand."
+    },
+    "control.track": {
+      "type": "dimension",
+      "light": "48px",
+      "dark": "48px",
+      "description": "Added in 4.0. The switch track. A control dimension rather than a padding role, which is why it is here and not in padding.* where the drift report's 48px suggested putting it."
+    },
+    "textSize.caption": {
+      "type": "dimension",
+      "light": "14px",
+      "dark": "14px"
+    },
+    "textSize.body": {
+      "type": "dimension",
+      "light": "13px",
+      "dark": "13px"
+    },
+    "textSize.dense": {
+      "type": "dimension",
+      "light": "11px",
+      "dark": "11px"
+    },
+    "textSize.label": {
+      "type": "dimension",
+      "light": "11px",
+      "dark": "11px"
+    },
+    "textSize.heading": {
+      "type": "dimension",
+      "light": "16px",
+      "dark": "16px"
+    },
+    "textSize.display": {
+      "type": "dimension",
+      "light": "20px",
+      "dark": "20px"
+    },
+    "textLeading.tight": {
+      "type": "number",
+      "light": "1.25",
+      "dark": "1.25"
+    },
+    "textLeading.normal": {
+      "type": "number",
+      "light": "1.5",
+      "dark": "1.5"
+    },
+    "textWeight.body": {
+      "type": "fontWeight",
+      "light": "400",
+      "dark": "400"
+    },
+    "textWeight.emphasis": {
+      "type": "fontWeight",
+      "light": "500",
+      "dark": "500"
+    },
+    "textWeight.heading": {
+      "type": "fontWeight",
+      "light": "600",
+      "dark": "600"
+    },
+    "fontFamily.sans": {
+      "type": "fontFamily",
+      "light": "system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
+      "dark": "system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+    },
+    "breakpoint.sm": {
+      "type": "dimension",
+      "light": "480px",
+      "dark": "480px"
+    },
+    "breakpoint.md": {
+      "type": "dimension",
+      "light": "900px",
+      "dark": "900px"
+    },
+    "breakpoint.lg": {
+      "type": "dimension",
+      "light": "1200px",
+      "dark": "1200px"
+    },
+    "gap.hairline": {
+      "type": "dimension",
+      "light": "2px",
+      "dark": "2px",
+      "description": "Added in 4.0. The only sub-4px step, and the only one a component may use: it exists for a dot beside a label, nothing larger."
+    },
+    "gap.tight": {
+      "type": "dimension",
+      "light": "4px",
+      "dark": "4px"
+    },
+    "gap.snug": {
+      "type": "dimension",
+      "light": "8px",
+      "dark": "8px"
+    },
+    "gap.normal": {
+      "type": "dimension",
+      "light": "12px",
+      "dark": "12px"
+    },
+    "gap.loose": {
+      "type": "dimension",
+      "light": "16px",
+      "dark": "16px",
+      "description": "Also the drawn indicator size for checkbox, radio and switch; see control.indicator."
+    },
+    "padding.inline": {
+      "type": "dimension",
+      "light": "12px",
+      "dark": "12px"
+    },
+    "padding.block": {
+      "type": "dimension",
+      "light": "8px",
+      "dark": "8px"
+    },
+    "padding.section": {
+      "type": "dimension",
+      "light": "24px",
+      "dark": "24px"
+    },
+    "padding.page": {
+      "type": "dimension",
+      "light": "96px",
+      "dark": "96px",
+      "description": "Added in 4.0 for full-height empty states."
+    },
+    "padding.gutter": {
+      "type": "dimension",
+      "light": "32px",
+      "dark": "32px",
+      "description": "Added in 4.0. The room a native select's dropdown arrow needs. Recurs in Select, Combobox and DatePicker for one reason, which is what makes it a role rather than three sites that happened to pick 32px."
+    },
+    "padding.hero": {
+      "type": "dimension",
+      "light": "48px",
+      "dark": "48px",
+      "description": "Added in 4.0 for a full-height empty state's vertical breathing room. Narrowly justified: the other 48px in the codebase is a Switch track width, which is a control dimension and is in DS-GAPS.md rather than forced in here."
+    },
+    "radius.control": {
+      "type": "dimension",
+      "light": "6px",
+      "dark": "6px"
+    },
+    "radius.surface": {
+      "type": "dimension",
+      "light": "10px",
+      "dark": "10px"
+    },
+    "radius.pill": {
+      "type": "dimension",
+      "light": "9999px",
+      "dark": "9999px"
+    },
+    "radius.indicator": {
+      "type": "dimension",
+      "light": "3px",
+      "dark": "3px",
+      "description": "Added in 4.0. The corner of a small drawn control - a checkbox box, a radio dot's ring. Was a 4px literal, which was never on the radius scale at all; radius.control (6px) reads as too round on a 16px box, and the 1px difference from 3px is not a design decision worth a new primitive."
+    },
+    "elevation.raised": {
+      "type": "shadow",
+      "light": "0 1px 2px rgba(20, 24, 28, 0.08)",
+      "dark": "0 1px 2px rgba(20, 24, 28, 0.08)",
+      "description": "A surface one step off the page."
+    },
+    "elevation.overlay": {
+      "type": "shadow",
+      "light": "0 4px 12px rgba(20, 24, 28, 0.12)",
+      "dark": "0 4px 12px rgba(20, 24, 28, 0.12)",
+      "description": "An overlay the page beneath is still visible through."
+    },
+    "elevation.modal": {
+      "type": "shadow",
+      "light": "0 12px 32px rgba(20, 24, 28, 0.18)",
+      "dark": "0 12px 32px rgba(20, 24, 28, 0.18)",
+      "description": "A modal: the page beneath is inert."
+    },
+    "duration.instant": {
+      "type": "duration",
+      "light": "80ms",
+      "dark": "80ms"
+    },
+    "duration.fast": {
+      "type": "duration",
+      "light": "140ms",
+      "dark": "140ms"
+    },
+    "duration.normal": {
+      "type": "duration",
+      "light": "220ms",
+      "dark": "220ms"
+    },
+    "duration.slow": {
+      "type": "duration",
+      "light": "320ms",
+      "dark": "320ms"
+    },
+    "duration.spin": {
+      "type": "duration",
+      "light": "700ms",
+      "dark": "700ms"
+    },
+    "duration.sweep": {
+      "type": "duration",
+      "light": "1400ms",
+      "dark": "1400ms"
+    },
+    "easing.standard": {
+      "type": "cubicBezier",
+      "light": "cubic-bezier(0.2, 0, 0, 1)",
+      "dark": "cubic-bezier(0.2, 0, 0, 1)",
+      "description": "Enters and leaves under one curve. The default."
+    },
+    "easing.enter": {
+      "type": "cubicBezier",
+      "light": "cubic-bezier(0, 0, 0.2, 1)",
+      "dark": "cubic-bezier(0, 0, 0.2, 1)",
+      "description": "Fast in, settles slowly. For things arriving."
+    },
+    "easing.exit": {
+      "type": "cubicBezier",
+      "light": "cubic-bezier(0.3, 0, 1, 1)",
+      "dark": "cubic-bezier(0.3, 0, 1, 1)",
+      "description": "For things leaving."
+    },
+    "easing.loop": {
+      "type": "cubicBezier",
+      "light": "cubic-bezier(0, 0, 1, 1)",
+      "dark": "cubic-bezier(0, 0, 1, 1)"
+    },
+    "layer.base": {
+      "type": "number",
+      "light": "0",
+      "dark": "0"
+    },
+    "layer.raised": {
+      "type": "number",
+      "light": "10",
+      "dark": "10"
+    },
+    "layer.sticky": {
+      "type": "number",
+      "light": "30",
+      "dark": "30"
+    },
+    "layer.rail": {
+      "type": "number",
+      "light": "40",
+      "dark": "40"
+    },
+    "layer.overlay": {
+      "type": "number",
+      "light": "100",
+      "dark": "100"
+    },
+    "layer.toast": {
+      "type": "number",
+      "light": "1000",
+      "dark": "1000"
+    }
+  }
+}

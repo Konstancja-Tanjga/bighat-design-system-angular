@@ -1,0 +1,64 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Typography" />
+
+# Typography
+
+The value class with the widest drift in 3.2.0: 76 raw `font-size` declarations
+against 10 that used a token, and 40 raw `font-weight` declarations against
+none — because no weight token was emitted to use. Two of the sizes in use
+(`12px`, `18px`) were not on the scale at all.
+
+## Sizes by role
+
+A component never names a pixel size. It names what the text is for.
+
+| token | value | for |
+| --- | --- | --- |
+| `textSize.display` | 20px | a dialog title, an empty-state headline |
+| `textSize.heading` | 16px | a section or card heading |
+| `textSize.caption` | 14px | the default reading size in a comfortable layout |
+| `textSize.body` | 13px | the default reading size in a dense application |
+| `textSize.dense` | 11px | table cells and dense lists, one step tighter |
+| `textSize.label` | 11px | field labels, badges, metadata |
+
+`dense` and `label` resolve to the same value today and are still two tokens,
+because they answer different questions: one is body copy in a tight layout,
+the other is a label anywhere. When labels need to change, one of them moves.
+
+Note that `body` is smaller than `caption`. That is not a mistake — this is a
+system for ERP screens, where the default reading size is 13px and 14px is the
+roomier option. It is also exactly the kind of inversion that a px literal
+hides and a named role makes obvious.
+
+## Weights
+
+Three. Not four.
+
+| token | value |
+| --- | --- |
+| `textWeight.body` | 400 |
+| `textWeight.emphasis` | 500 |
+| `textWeight.heading` | 600 |
+
+`700` appeared four times in 3.2.0 and is not on the scale. Snapped to
+`heading` in 4.0: at these sizes, on these surfaces, the difference between 600
+and 700 is a rendering artefact of the font stack rather than a hierarchy the
+reader can use.
+
+## Leading
+
+`textLeading.tight` (1.25) for headings and single-line controls,
+`textLeading.normal` (1.5) for anything the reader reads more than one line of.
+
+## Family
+
+`fontFamily.sans` — a system stack. New as a token in 4.0; before that it was
+hardcoded in the stylesheet renderer, which made it the one value in the system
+no consumer could theme. `--bh-font-family` still resolves for the whole 4.x
+line and is removed in 5.0.
+
+## Line length
+
+Body copy caps at 72 characters. Not a token, because CSS `ch` units already
+express it and a token would be a worse way to say `max-inline-size: 72ch`.

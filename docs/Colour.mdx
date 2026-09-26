@@ -1,0 +1,84 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Colour & tone" />
+
+# Colour & tone
+
+Two layers, and only one of them is an API.
+
+## Primitives are not for you
+
+`color.blue.500` says what a colour *is*. Fifty of them exist, they are defined
+in `primitive.tokens.json`, and product code may not touch them. They exist to
+define the layer below and for nothing else.
+
+If no semantic role fits what you are building, that is a signal the system is
+missing a role — not a licence to reach one layer down. Say so in `DS-GAPS.md`
+and stop.
+
+## Semantics are roles
+
+| group | what it answers |
+| --- | --- |
+| `surface.*` | what is this sitting on |
+| `text.*` | how important is this text |
+| `border.*` | is this decoration, a control boundary, or focus |
+| `action.*` | what does pressing this do |
+| `status.*` | what state is this in |
+
+`text.muted` survives a rebrand. `text.grey500` does not.
+
+## Tone is one vocabulary
+
+Five values, in every component that has a tone axis:
+
+`neutral` · `info` · `success` · `warning` · `critical`
+
+A component narrows the scale, never redefines it. `Button` takes `neutral` and
+`critical`; `Badge` takes all five; `Progress` takes `neutral`, `success`,
+`critical`. Each is declared as an `Extract<Tone, …>` in `vocabulary.ts`, so a
+narrowing is provably a subset and adding a sixth tone is one edit.
+
+Until 4.0 this was three separate unions that happened to overlap, and two
+components — `Button` and `Progress` — started their scale at `default` instead
+of `neutral` and disagreed with each other about which values existed. Nothing
+was broken in any one file. It was broken across files, which is the only place
+a design system can be broken.
+
+`tone="default"` resolves for the whole 4.x line and is removed in 5.0.
+
+## Contrast is a build error
+
+Twenty-six foreground/background pairs are declared in the semantic token
+file's `$extensions` block. `contrast.test.ts` iterates them across both themes
+and fails the build on any that misses its threshold.
+
+The thresholds are not all 4.5:1, and getting that distinction wrong in either
+direction is a real failure — too lax ships unreadable UI, too strict forces a
+washed-out palette nobody wants:
+
+| requirement | ratio | what it applies to |
+| --- | --- | --- |
+| `bodyText` | 4.5:1 | body copy, button labels, status messages |
+| `largeText` | 3:1 | headings above 18.66px bold or 24px regular |
+| `nonText` | 3:1 | control boundaries and the focus ring (WCAG 1.4.11) |
+
+Adding a token that renders text or a control boundary means adding a line to
+the pairs list. That list is not documentation. An undeclared pair is a review
+comment; a declared one is a gate.
+
+## Never colour alone
+
+WCAG 1.4.1. A status whose meaning lives in its hue is invisible to anyone who
+cannot see the difference. `Badge` requires its label and has no `color` prop;
+`status.*` tokens always accompany text. This is a rule about the component
+API, not about how carefully someone uses it.
+
+## Dark theme changes colour and nothing else
+
+`theme.dark.tokens.json` declares colour roles only. Every non-colour semantic
+— spacing, sizes, radii, durations — is shared, because a theme that changes
+spacing is not a theme, it is a second design.
+
+The build enforces it: a dark override naming a role the semantic layer does
+not define throws, and there is no mechanism for a dark-only spacing value.

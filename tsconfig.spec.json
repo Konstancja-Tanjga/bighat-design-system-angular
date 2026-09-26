@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/spec",
+    "types": ["node"],
+    "paths": { "@bighatpoland/spec/src/suites": ["./src/test/suites.ts"] }
+  },
+  "include": ["src/**/*.spec.ts", "src/test/**/*.ts", "src/**/*.d.ts"]
+}

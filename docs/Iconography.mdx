@@ -1,0 +1,62 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Iconography" />
+
+# Iconography
+
+The system does not ship icons, and that is the decision worth documenting.
+
+## Why there is no icon set
+
+An icon set is the single largest thing a design system can carry and the
+easiest to get wrong for a consumer: an ERP product has domain glyphs a generic
+set will never have, and a generic set has three hundred a product will never
+use. Shipping one means either bundling all of it or building a tree-shaking
+story that fights every bundler.
+
+So icons are a slot. Components accept them; they do not own them.
+
+## Icons in components are decorative
+
+Every icon slot in the system is `aria-hidden`. `Button`'s `iconStart` and
+`iconEnd`, `StateBlock`'s `icon`, `Badge`'s dot — all hidden from assistive
+technology, all accompanied by a required text label.
+
+This is not caution, it is the API. There is no icon-only `Button` variant,
+because an icon-only button with no accessible name is the most common
+accessibility defect in an ERP toolbar, and a prop that permits it is a prop
+that guarantees it. If a control genuinely must be icon-only, the consumer
+writes `aria-label` on their own element — which in Angular they already have,
+since `bhButton` is a directive on their button.
+
+An icon that carries meaning the label does not is a design bug. Either the
+label is missing information, or the icon is decoration pretending otherwise.
+
+## Sizing
+
+Icons inherit `currentColor` and are sized in `em`, so an icon inside a
+`size="sm"` button scales with its label without a second scale to maintain.
+There are deliberately no icon-size tokens.
+
+```css
+.bh-button__icon > svg {
+  inline-size: 1em;
+  block-size: 1em;
+}
+```
+
+## What the consumer provides
+
+An inline `<svg>`, a sprite reference, or a component from whatever set they
+already use. Requirements, all of them enforceable in review rather than in
+code:
+
+- `fill="currentColor"` or `stroke="currentColor"` — never a hardcoded hex,
+  which will miss the dark theme
+- no `width`/`height` attributes — the `em` sizing above handles it
+- `focusable="false"` for IE-era tooling still in enterprise estates
+- no `<title>` — the wrapper is `aria-hidden`, so a title inside it is
+  unreachable and its presence suggests otherwise
+
+`IconPicker` is the one component that treats icons as data rather than
+decoration, and it is documented on its own page.

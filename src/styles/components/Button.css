@@ -1,0 +1,109 @@
+.bh-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--bh-gap-snug);
+  border: 1px solid transparent;
+  border-radius: var(--bh-radius-control);
+  font-family: var(--bh-font-family);
+  font-weight: var(--bh-text-weight-emphasis);
+  cursor: pointer;
+  transition:
+    background-color var(--bh-duration-fast) var(--bh-easing-standard),
+    border-color var(--bh-duration-fast) var(--bh-easing-standard);
+  white-space: nowrap;
+}
+
+.bh-button--sm {
+  height: var(--bh-control-sm);
+  padding: 0 var(--bh-padding-inline);
+  font-size: var(--bh-text-size-body);
+}
+.bh-button--md {
+  height: var(--bh-control-md);
+  padding: 0 var(--bh-padding-section);
+  font-size: var(--bh-text-size-caption);
+}
+.bh-button--lg {
+  height: var(--bh-control-lg);
+  padding: 0 var(--bh-padding-section);
+  font-size: var(--bh-text-size-heading);
+}
+
+.bh-button--primary {
+  background: var(--bh-action-primary-bg);
+  color: var(--bh-action-primary-fg);
+}
+.bh-button--primary:hover:not([aria-disabled='true']):not(:disabled) {
+  background: var(--bh-action-primary-bg-hover);
+}
+.bh-button--primary:active:not([aria-disabled='true']):not(:disabled) {
+  background: var(--bh-action-primary-bg-active);
+}
+
+.bh-button--primary.bh-button--critical {
+  background: var(--bh-action-critical-bg);
+  color: var(--bh-action-critical-fg);
+}
+.bh-button--primary.bh-button--critical:hover:not([aria-disabled='true']):not(:disabled) {
+  background: var(--bh-action-critical-bg-hover);
+}
+
+.bh-button--secondary {
+  background: var(--bh-action-secondary-bg);
+  color: var(--bh-action-secondary-fg);
+  border-color: var(--bh-action-secondary-border);
+}
+.bh-button--secondary:hover:not([aria-disabled='true']):not(:disabled) {
+  background: var(--bh-action-secondary-bg-hover);
+}
+.bh-button--secondary.bh-button--critical {
+  color: var(--bh-status-critical-fg);
+  border-color: var(--bh-status-critical-fg);
+}
+
+.bh-button--ghost {
+  background: transparent;
+  color: var(--bh-text-primary);
+}
+.bh-button--ghost:hover:not([aria-disabled='true']):not(:disabled) {
+  background: var(--bh-action-secondary-bg-hover);
+}
+.bh-button--ghost.bh-button--critical {
+  color: var(--bh-status-critical-fg);
+}
+
+/* Disabled is expressed with opacity rather than a grey token on purpose:
+   a dedicated disabled colour would need its own contrast pair per variant,
+   and WCAG exempts disabled controls from 1.4.3 anyway. */
+.bh-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.bh-button[aria-disabled='true'] {
+  cursor: progress;
+}
+
+.bh-button--full {
+  width: 100%;
+}
+
+.bh-button__icon {
+  display: inline-flex;
+  align-items: center;
+}
+
+.bh-button__spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: bh-spin var(--bh-duration-spin) var(--bh-easing-loop) infinite;
+}
+
+@keyframes bh-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

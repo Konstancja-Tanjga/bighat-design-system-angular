@@ -1,0 +1,93 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Contributing/Versioning & deprecation" />
+
+# Versioning & deprecation
+
+## What is versioned, and separately
+
+| package | versioning |
+| --- | --- |
+| `@bighatpoland/tokens` | with `css` and `spec`, as one unit |
+| `@bighatpoland/css` | with `tokens` and `spec` |
+| `@bighatpoland/spec` | with `tokens` and `css` |
+| `@bighatpoland/ui` (React) | independently |
+| `@bighatpoland/ui-angular` | independently |
+
+The shared core moves as one because a token rename, a class rename and a
+contract change are the same change wearing three hats. The two libraries move
+independently because Angular ships a major every six months and React does
+not — tying them together would force a React major for an Angular peer range,
+which is a breaking change for consumers who did nothing.
+
+The consequence: `ui` 4.2.0 and `ui-angular` 1.3.0 can both depend on
+`tokens` 4.x. Parity is asserted against the contract, not against a shared
+version number.
+
+## Semver, as it applies here
+
+**Major.** Removing a prop, a token, a component, or a CSS class. Narrowing a
+prop's accepted values. Changing a component's DOM so a consumer's own selector
+breaks. Raising the minimum Angular or React version.
+
+**Minor.** New component, new prop, new token, new story. Widening a union.
+Deprecating something — a deprecation is additive, because everything still
+works.
+
+**Patch.** A visual fix that brings the implementation in line with the
+contract. A missing ARIA attribute. Anything where the previous behaviour was a
+bug against the documented contract.
+
+The last one has an edge worth naming: fixing a visual bug changes pixels, and
+a consumer with a screenshot test will see it. That is still a patch. If it
+were a major, nobody would ever get the fix.
+
+## Deprecation runs for a whole major line
+
+Announced in one major, removed in the next. Not "in a future release", not
+"soon" — a named version.
+
+The pattern, three times now:
+
+| deprecated | in | removed in | replacement |
+| --- | --- | --- | --- |
+| `Button variant="danger"` | 2.0.0 | 3.0.0 | `tone="critical"` |
+| `Button tone="default"` | 4.0.0 | 5.0.0 | `tone="neutral"` |
+| `Progress tone="default"` | 4.0.0 | 5.0.0 | `tone="neutral"` |
+| `StateBlock density` | 4.0.0 | 5.0.0 | `scope` |
+| `--bh-font-family` | 4.0.0 | 5.0.0 | `--bh-font-family-sans` |
+
+While deprecated, a thing must keep working, warn once in development, and be
+recorded in the contract's `removed` field. That field is carried forward
+indefinitely and never cleaned up — it is what answers "why is there no
+`variant="danger"`" three years after anyone remembers.
+
+Once removed, the old form is a type error rather than a silent fallback. A
+silent fallback is worse than a break: it works until a rebrand, then quietly
+renders the wrong thing.
+
+## Angular needs schematics, not just a document
+
+React consumers read `MIGRATION.md` and edit. Angular consumers run
+`ng update @bighatpoland/ui-angular` and expect their code to be migrated,
+because that is what every other Angular package does. A major without
+schematics is a major most consumers will not take.
+
+Every breaking change above that touches a template or a class name ships a
+schematic. Ones that cannot be automated — a semantic change with no textual
+signature — are listed in the migration guide with the reason they were not.
+
+## Token changes
+
+Adding a semantic token is a minor. Renaming one is a major *with an alias*, as
+`--bh-font-family` shows: the alias resolves to the new name for the whole
+following major line, so a consumer's own stylesheet does not break the moment
+they upgrade.
+
+Changing a token's *value* is where judgement lands. If the change is within
+the role — `text.muted` going one step darker to pass contrast — it is a patch.
+If the role itself moves, it is a major, because a consumer has built a layout
+around the old value.
+
+Removing a token requires that nothing uses it, and `tokensUsed` in the
+contracts is what makes that checkable rather than a search.

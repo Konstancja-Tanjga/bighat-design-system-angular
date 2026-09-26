@@ -1,0 +1,63 @@
+.bh-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bh-gap-tight);
+  font-family: var(--bh-font-family);
+}
+
+.bh-field__label {
+  color: var(--bh-text-primary);
+  font-size: var(--bh-text-size-body);
+  font-weight: var(--bh-text-weight-emphasis);
+}
+
+.bh-field__required {
+  margin-left: var(--bh-gap-hairline);
+  color: var(--bh-status-critical-fg);
+}
+
+.bh-field__description {
+  margin: 0;
+  color: var(--bh-text-muted);
+  font-size: var(--bh-text-size-body);
+}
+
+.bh-field__error {
+  margin: 0;
+  color: var(--bh-status-critical-fg);
+  font-size: var(--bh-text-size-body);
+}
+
+.bh-input,
+.bh-select {
+  height: var(--bh-control-md);
+  padding: 0 var(--bh-padding-inline);
+  background: var(--bh-surface-base);
+  color: var(--bh-text-primary);
+  border: 1px solid var(--bh-border-strong);
+  border-radius: var(--bh-radius-control);
+  font-family: inherit;
+  font-size: var(--bh-text-size-caption);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.bh-input::placeholder {
+  color: var(--bh-text-muted);
+}
+
+.bh-input:disabled,
+.bh-select:disabled {
+  background: var(--bh-surface-sunken);
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Invalid state is carried by border weight *and* the error text below, never
+   by colour alone — the border is the redundant cue, not the only one. */
+.bh-input--invalid,
+.bh-select--invalid {
+  border-color: var(--bh-status-critical-fg);
+  border-width: 2px;
+  padding: 0 calc(var(--bh-padding-inline) - 1px);
+}

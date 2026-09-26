@@ -1,0 +1,13 @@
+node_modules
+storybook-static
+documentation.json
+# dist/ IS committed: dist/tokens.css is the runtime API and `tokens:check`
+# compares the committed copy against the DTCG source, which is what makes a
+# hand-edit fail the build instead of surviving until the next rebuild.
+dist/index.js
+dist/index.d.ts
+dist/*.map
+dist/package
+out-tsc
+*.log
+.angular

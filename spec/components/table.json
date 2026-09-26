@@ -1,0 +1,209 @@
+{
+  "$schema": "../schema.json",
+  "name": "Table",
+  "layer": "data",
+  "purpose": "Dense enterprise data. Sort and paging are controlled, empty/loading/error delegate to StateBlock, and the narrow form is declared rather than guessed.",
+  "notFor": [
+    "Layout"
+  ],
+  "composition": "composite",
+  "anatomy": [
+    {
+      "part": "bh-table-wrapper",
+      "element": "div"
+    },
+    {
+      "part": "bh-table",
+      "element": "table"
+    },
+    {
+      "part": "bh-table__caption",
+      "element": "caption",
+      "required": false
+    },
+    {
+      "part": "bh-table__disclose-head",
+      "element": "th"
+    },
+    {
+      "part": "bh-table__select",
+      "element": "th"
+    },
+    {
+      "part": "bh-table__sort",
+      "element": "button[type=button]"
+    },
+    {
+      "part": "bh-table__sort-icon",
+      "element": "span"
+    },
+    {
+      "part": "bh-table__actions-head",
+      "element": "th"
+    },
+    {
+      "part": "bh-table__state",
+      "element": "td"
+    },
+    {
+      "part": "bh-table__disclose",
+      "element": "td"
+    },
+    {
+      "part": "bh-table__disclose-body",
+      "element": "div"
+    },
+    {
+      "part": "bh-table__actions",
+      "element": "td"
+    }
+  ],
+  "props": {
+    "caption": {
+      "kind": "string",
+      "note": "Names the table for assistive tech."
+    },
+    "columns": {
+      "kind": "data",
+      "required": true,
+      "meaning": "the column definitions",
+      "note": "Each column carries key, header, priority, align, sortable and a value accessor. Its own shape is in $columnProps rather than in props, because the migration flattened it into the component API where it never was one - which is why the parity check reported three phantom missing props on both sides.",
+      "angular": "input.required<BhTableColumn<T>[]>()"
+    },
+    "rows": {
+      "kind": "data"
+    },
+    "rowKey": {
+      "kind": "event",
+      "angular": "output<unknown>('rowKey')"
+    },
+    "sort": {
+      "kind": "enum",
+      "values": [
+        "{ key: string; direction: ascending",
+        "descending }"
+      ],
+      "note": "Controlled — the same component works with server-side sorting.",
+      "angular": "sort = model<BhTableSort|undefined>()"
+    },
+    "onSortChange": {
+      "kind": "event",
+      "angular": "sort = model<BhTableSort|undefined>() — the two-way binding *is* the change event; a separate output would fire twice"
+    },
+    "state": {
+      "kind": "data",
+      "note": "Replaces the body with a StateBlock across every column."
+    },
+    "responsive": {
+      "kind": "enum",
+      "values": [
+        "scroll",
+        "stack",
+        "priority"
+      ],
+      "default": "scroll",
+      "note": "scroll keeps the grid and scrolls the container — right when the reader is comparing across columns. stack turns each row into term/value pairs via DescriptionList — right at six columns or fewer. priority moves low-priority columns into a per-row disclosure — right for a wide table with one identifying column. Queries are @container, so it responds to its own width and works in a SidePanel."
+    },
+    "selection": {
+      "kind": "data",
+      "note": "Checkbox column plus a tri-state select-all. Partial resolves to 'select the rest', never to 'clear'."
+    },
+    "rowActions": {
+      "kind": "event",
+      "note": "Per-row overflow Menu, which already solves focus return.",
+      "angular": "output<unknown>('rowActions')"
+    },
+    "stickyHeader": {
+      "kind": "boolean",
+      "default": false,
+      "note": "Column meaning is lost the moment the header scrolls away."
+    },
+    "density": {
+      "kind": "density",
+      "values": [
+        "comfortable",
+        "compact"
+      ],
+      "default": "comfortable"
+    },
+    "totals": {
+      "kind": "event",
+      "note": "Rendered in <tfoot>, so a sort cannot move it into the data.",
+      "angular": "output<unknown>('totals')"
+    }
+  },
+  "states": [
+    "default",
+    "hover"
+  ],
+  "keyboard": {},
+  "aria": {
+    "role": "table (implicit, from <table>)",
+    "attributes": {
+      "aria-sort": "isSorted",
+      "aria-hidden": "true",
+      "aria-label": "More"
+    },
+    "labelling": "From <caption>, which is optional but strongly preferred — an uncaptioned table in a page of tables is unidentifiable in a screen reader’s table list.",
+    "focus": "The table itself is not focusable. Sortable headers are buttons and are in the tab order; rows are not, unless rowActivated is bound, in which case the row needs its own focusable trigger rather than a click handler on the <tr>.",
+    "announcements": "aria-sort on the sorted header. The row count is exposed via aria-rowcount rather than announced. Empty, loading and error states delegate to StateBlock inside a full-width cell, and inherit its policy.",
+    "wcag": [
+      "1.3.1",
+      "1.4.10",
+      "2.4.7"
+    ]
+  },
+  "implementations": {
+    "version": "1.0.0",
+    "status": "partial",
+    "unimplemented": [
+      "selection",
+      "rowActions",
+      "stickyHeader",
+      "totals"
+    ],
+    "alsoImplementedIn": "react"
+  },
+  "tokensUsed": [
+    "border.strong",
+    "border.subtle",
+    "control.sm",
+    "font.family",
+    "gap.hairline",
+    "gap.loose",
+    "gap.tight",
+    "padding.block",
+    "padding.inline",
+    "padding.section",
+    "radius.control",
+    "radius.surface",
+    "status.info.bg",
+    "surface.base",
+    "surface.sunken",
+    "text.leadingNormal",
+    "text.muted",
+    "text.primary",
+    "text.secondary",
+    "text.sizeBody",
+    "text.sizeCaption",
+    "text.sizeDense",
+    "text.sizeLabel",
+    "text.weightHeading"
+  ],
+  "interactive": true,
+  "$columnProps": {
+    "numeric": {
+      "kind": "boolean",
+      "note": "Aligns end and sets tabular-nums. Two things always wanted together."
+    },
+    "priority": {
+      "kind": "data",
+      "default": 1,
+      "note": "What survives when the container narrows, under responsive=priority. Declared by whoever knows the domain."
+    },
+    "hideWhenStacked": {
+      "kind": "boolean",
+      "note": "For a column with no value to label, such as actions."
+    }
+  }
+}

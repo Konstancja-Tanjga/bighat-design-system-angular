@@ -1,0 +1,188 @@
+{
+  "$schema": "../schema.json",
+  "name": "Button",
+  "aliases": [
+    "CTA"
+  ],
+  "layer": "control",
+  "purpose": "An action the user takes.",
+  "notFor": [
+    "Navigation to another page — that is an anchor, and a button breaks middle-click, cmd-click, copy-link-address and the browser's history model",
+    "A destination that should be bookmarkable",
+    "A toggle with two persistent states — that is Switch"
+  ],
+  "composition": "leaf",
+  "anatomy": [
+    {
+      "part": "bh-button",
+      "element": "button",
+      "note": "type defaults to the native submit inside a form; pass type explicitly."
+    },
+    {
+      "part": "bh-button__spinner",
+      "element": "span",
+      "required": false,
+      "note": "loading only. aria-hidden; the label below carries the announcement."
+    },
+    {
+      "part": "bh-button__icon",
+      "element": "span",
+      "required": false,
+      "note": "aria-hidden in both slots. An icon that carries meaning belongs in the label."
+    },
+    {
+      "part": "bh-button__label",
+      "element": "span",
+      "note": "Always rendered. Never empty — an icon-only button still needs a name."
+    }
+  ],
+  "props": {
+    "variant": {
+      "kind": "variant",
+      "values": [
+        "primary",
+        "secondary",
+        "ghost"
+      ],
+      "default": "primary",
+      "meaning": "how much visual weight it carries",
+      "angular": "input<ButtonVariant>('primary')"
+    },
+    "tone": {
+      "kind": "tone",
+      "values": [
+        "neutral",
+        "critical"
+      ],
+      "default": "neutral",
+      "meaning": "what happens if you press it",
+      "note": "Renamed from 'default' in 4.0 so that every tone axis in the system shares one vocabulary.",
+      "angular": "input<ButtonTone>('neutral')"
+    },
+    "size": {
+      "kind": "size",
+      "values": [
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md",
+      "angular": "input<ButtonSize>('md')"
+    },
+    "loading": {
+      "kind": "boolean",
+      "default": false,
+      "meaning": "the action is in flight",
+      "note": "Stays focusable — losing focus mid-interaction is worse than a brief inert control — and blocks the click via aria-disabled plus a guard, not the disabled attribute.",
+      "angular": "input<boolean>(false)"
+    },
+    "loadingLabel": {
+      "kind": "string",
+      "default": "Loading",
+      "note": "Visually hidden, announced while loading. Localised by the consumer.",
+      "angular": "input<string>('Loading')"
+    },
+    "iconStart": {
+      "kind": "slot",
+      "content": "icon",
+      "decorative": true,
+      "angular": "marker attribute [bhIconStart] on a child element — the directive has no template, so there is nothing to project into"
+    },
+    "iconEnd": {
+      "kind": "slot",
+      "content": "icon",
+      "decorative": true,
+      "angular": "marker attribute [bhIconEnd] on a child element"
+    },
+    "fullWidth": {
+      "kind": "boolean",
+      "default": false,
+      "angular": "input<boolean>(false)"
+    },
+    "children": {
+      "kind": "slot",
+      "content": "text",
+      "required": true,
+      "note": "Required. There is no icon-only variant, because an icon-only button with no accessible name is the single most common a11y defect in an ERP toolbar.",
+      "angular": "the content of the consumer’s own <button> element"
+    }
+  },
+  "states": [
+    "default",
+    "hover",
+    "focus-visible",
+    "active",
+    "disabled",
+    "loading"
+  ],
+  "keyboard": {
+    "Enter": "Activates. Native.",
+    "Space": "Activates on keyup. Native.",
+    "Tab": "Moves focus in. A loading button stays in the tab order; a disabled one does not."
+  },
+  "aria": {
+    "role": "button",
+    "attributes": {
+      "aria-disabled": "true while loading — not the disabled attribute, which would remove it from the tab order",
+      "aria-busy": "true while loading"
+    },
+    "labelling": "From the label slot. Required; there is no aria-label prop, because a prop invites an icon-only button.",
+    "focus": "Visible ring from border.focus at 3:1 against both surface.base and surface.raised. Never removed on :focus-visible.",
+    "announcements": "loadingLabel is announced when loading becomes true; the label itself does not change.",
+    "wcag": [
+      "1.4.11",
+      "2.1.1",
+      "2.4.7",
+      "2.5.5",
+      "4.1.2"
+    ]
+  },
+  "tokensUsed": [
+    "action.primary.bg",
+    "action.primary.bgHover",
+    "action.primary.bgActive",
+    "action.primary.fg",
+    "action.secondary.bg",
+    "action.secondary.bgHover",
+    "action.secondary.fg",
+    "action.secondary.border",
+    "action.critical.bg",
+    "action.critical.bgHover",
+    "action.critical.fg",
+    "border.focus",
+    "control.sm",
+    "control.md",
+    "control.lg",
+    "radius.control",
+    "gap.snug",
+    "padding.inline",
+    "textSize.body",
+    "textWeight.emphasis",
+    "duration.fast",
+    "easing.standard"
+  ],
+  "content": {
+    "label": "Sentence case, imperative, no trailing period. 'Save changes', not 'Save Changes' or 'Submit'.",
+    "critical": "Name the object: 'Delete workspace', not 'Delete'."
+  },
+  "removed": {
+    "variant=\"danger\"": {
+      "replacement": "tone=\"critical\"",
+      "deprecatedIn": "2.0.0",
+      "removedIn": "3.0.0",
+      "reason": "variant conflated visual weight with consequence"
+    },
+    "tone=\"default\"": {
+      "replacement": "tone=\"neutral\"",
+      "deprecatedIn": "4.0.0",
+      "removedIn": "5.0.0",
+      "reason": "'default' was Button-only; every other tone axis in the system starts at 'neutral'"
+    }
+  },
+  "implementations": {
+    "version": "0.1.0",
+    "status": "implemented",
+    "alsoImplementedIn": "react"
+  },
+  "interactive": true
+}

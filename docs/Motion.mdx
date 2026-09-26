@@ -1,0 +1,62 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Motion" />
+
+# Motion
+
+New in 4.0. Before that, motion was the one value class with a primitive scale
+that never reached the emitted CSS: `duration` existed in `primitives.ts`, was
+exported from the token index, and appeared in exactly zero stylesheets.
+Component CSS carried `140ms`, `200ms`, `220ms`, `700ms`, `1400ms` and `1.4s`
+as literals — the last two being the same number written two ways, which is the
+drift a token layer exists to prevent.
+
+## Durations
+
+| token | value | for |
+| --- | --- | --- |
+| `duration.instant` | 80ms | a state flip the user should not read as movement |
+| `duration.fast` | 140ms | hover, focus, colour changes. The default |
+| `duration.normal` | 220ms | anything that changes position or size |
+| `duration.slow` | 320ms | a full surface arriving — dialog, panel |
+| `duration.spin` | 700ms | one rotation of a spinner. A loop, not a transition |
+| `duration.sweep` | 1400ms | one pass of a skeleton shimmer. A loop |
+
+The last two are named differently on purpose. A loop length is not a
+transition length, and treating them as one scale is how a spinner ends up
+tuned to feel right for a hover.
+
+## Easings
+
+| token | curve | for |
+| --- | --- | --- |
+| `easing.standard` | `0.2, 0, 0, 1` | the default; enters and leaves under one curve |
+| `easing.enter` | `0, 0, 0.2, 1` | fast in, settles slowly. Things arriving |
+| `easing.exit` | `0.3, 0, 1, 1` | things leaving |
+| `easing.loop` | linear | loops only. Anything eased looks like it is stalling |
+
+## Reduced motion is not optional
+
+Every component that animates carries a `prefers-reduced-motion` branch, and
+the drift gate asserts it: a stylesheet containing `@keyframes` or `animation:`
+without a reduced-motion block fails the build.
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  .bh-skeleton {
+    animation: none;
+  }
+}
+```
+
+An animation with no opt-out is a WCAG 2.3.3 failure for anyone with a
+vestibular disorder, and it is the kind of failure that never shows up in a
+review because the reviewer's OS setting is off.
+
+## Angular
+
+Nothing framework-specific. Both libraries render the same classes from the
+same stylesheet, so motion is defined once. In particular this system does not
+use Angular's animations package — `@angular/animations` would put a second
+motion vocabulary in one of the two libraries, and the tokens above would then
+describe only half the system.

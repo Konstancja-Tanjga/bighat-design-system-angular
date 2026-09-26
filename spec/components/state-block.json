@@ -1,0 +1,167 @@
+{
+  "$schema": "../schema.json",
+  "name": "StateBlock",
+  "aliases": [
+    "empty state",
+    "error state",
+    "EmptyState"
+  ],
+  "layer": "feedback",
+  "purpose": "The three states that are not the happy path: nothing to show, fetching, broke.",
+  "notFor": [
+    "A validation message on a single field — that is the field's own error",
+    "A transient confirmation — that is Toast",
+    "A blocking failure that needs a decision — that is Dialog"
+  ],
+  "composition": "composite",
+  "anatomy": [
+    {
+      "part": "bh-stateblock",
+      "element": "div",
+      "note": "role varies by state; see aria.announcements. data-state mirrors the prop for tests."
+    },
+    {
+      "part": "bh-stateblock__spinner",
+      "element": "span",
+      "required": false,
+      "note": "loading only, aria-hidden."
+    },
+    {
+      "part": "bh-stateblock__icon",
+      "element": "span",
+      "required": false,
+      "note": "Not rendered while loading. aria-hidden."
+    },
+    {
+      "part": "bh-stateblock__title",
+      "element": "p",
+      "note": "Not a heading: this block can appear inside a table cell, where a heading would corrupt the document outline."
+    },
+    {
+      "part": "bh-stateblock__description",
+      "element": "div",
+      "required": false
+    },
+    {
+      "part": "bh-stateblock__actions",
+      "element": "div",
+      "required": false
+    },
+    {
+      "part": "bh-stateblock__diagnostics",
+      "element": "details",
+      "required": false,
+      "note": "Collapsed. Available to whoever needs a correlation id, invisible to everyone else."
+    }
+  ],
+  "props": {
+    "state": {
+      "kind": "enum",
+      "values": [
+        "empty",
+        "loading",
+        "error"
+      ],
+      "required": true,
+      "meaning": "which of the three non-happy paths this is",
+      "angular": "input.required<StateBlockState>()"
+    },
+    "title": {
+      "kind": "string",
+      "required": true,
+      "note": "One line, sentence case, no trailing period.",
+      "angular": "input.required<string>()"
+    },
+    "description": {
+      "kind": "slot",
+      "content": "text",
+      "required": false,
+      "note": "Say what the user can do, not what the server did.",
+      "angular": "<ng-content select=\"[bhDescription]\">"
+    },
+    "action": {
+      "kind": "slot",
+      "content": "actions",
+      "required": false,
+      "note": "The single most useful next step. Omit rather than invent one.",
+      "angular": "<ng-content select=\"[bhAction]\">"
+    },
+    "secondaryAction": {
+      "kind": "slot",
+      "content": "actions",
+      "required": false,
+      "angular": "<ng-content select=\"[bhSecondaryAction]\">"
+    },
+    "icon": {
+      "kind": "slot",
+      "content": "icon",
+      "decorative": true,
+      "required": false,
+      "angular": "<ng-content select=\"[bhIcon]\">"
+    },
+    "scope": {
+      "kind": "scope",
+      "values": [
+        "inline",
+        "section",
+        "page"
+      ],
+      "default": "section",
+      "meaning": "how much vertical room it claims",
+      "note": "Named 'density' until 4.0, where density was reserved for row spacing across Table and DescriptionList.",
+      "angular": "input<StateBlockScope>('section')"
+    },
+    "diagnostics": {
+      "kind": "slot",
+      "content": "text",
+      "required": false,
+      "angular": "<ng-content select=\"[bhDiagnostics]\">"
+    }
+  },
+  "states": [
+    "empty",
+    "loading",
+    "error"
+  ],
+  "keyboard": {
+    "Tab": "Reaches the action, then the secondary action, then the diagnostics summary. The block itself is not focusable."
+  },
+  "aria": {
+    "role": "status when loading, alert when error, none when empty",
+    "attributes": {
+      "aria-busy": "true while loading",
+      "data-state": "mirrors state, for tests"
+    },
+    "labelling": "The title is the accessible name of the region when a live role is present.",
+    "focus": "Never steals focus. A block that grabs focus on render interrupts whatever the user was doing.",
+    "announcements": "loading is polite (role=status) because it is transient and must not interrupt reading. error is assertive (role=alert) because the user's action did not happen. empty gets no live region at all — it is the rendered result of a successful request, and announcing it is noise. Getting this wrong in either direction is a real failure, which is why it is a component and not a guideline.",
+    "wcag": [
+      "4.1.3",
+      "1.4.1"
+    ]
+  },
+  "tokensUsed": [
+    "text.primary",
+    "text.muted",
+    "surface.base",
+    "gap.snug",
+    "gap.normal",
+    "padding.section",
+    "padding.page",
+    "textSize.heading",
+    "textSize.body",
+    "duration.sweep",
+    "easing.loop"
+  ],
+  "content": {
+    "title": "Sentence case, no trailing period. 'No invoices yet', not 'No Invoices Found.'",
+    "error": "Say what did not happen and whether data changed: 'We could not load your invoices. Your data has not changed.' Never 'Something went wrong'.",
+    "empty": "Distinguish 'nothing yet' from 'nothing matches these filters' — they need different actions."
+  },
+  "implementations": {
+    "version": "0.1.0",
+    "status": "parity",
+    "alsoImplementedIn": "react"
+  },
+  "interactive": false
+}

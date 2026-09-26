@@ -1,0 +1,493 @@
+{
+  "$description": "Layer 2 - semantic tokens. Every token names a role, never an appearance. text.muted survives a rebrand; text.grey500 does not. This is the only token layer product code and generated code may reference.",
+  "surface": {
+    "base": {
+      "$value": "{color.neutral.0}"
+    },
+    "sunken": {
+      "$value": "{color.neutral.50}"
+    },
+    "raised": {
+      "$value": "{color.neutral.0}"
+    },
+    "overlay": {
+      "$value": "{color.neutral.0}"
+    },
+    "inverse": {
+      "$value": "{color.neutral.900}"
+    }
+  },
+  "text": {
+    "primary": {
+      "$value": "{color.neutral.900}"
+    },
+    "secondary": {
+      "$value": "{color.neutral.700}"
+    },
+    "muted": {
+      "$value": "{color.neutral.600}"
+    },
+    "inverse": {
+      "$value": "{color.neutral.0}"
+    },
+    "onAccent": {
+      "$value": "{color.neutral.0}"
+    },
+    "link": {
+      "$value": "{color.blue.600}"
+    }
+  },
+  "border": {
+    "subtle": {
+      "$value": "{color.neutral.200}",
+      "$description": "Decorative only - dividers, table rules. Not held to 3:1 by design."
+    },
+    "strong": {
+      "$value": "{color.neutral.500}",
+      "$description": "Boundary of an interactive control. Held to 3:1."
+    },
+    "focus": {
+      "$value": "{color.blue.500}"
+    }
+  },
+  "action": {
+    "primary": {
+      "bg": {
+        "$value": "{color.blue.500}"
+      },
+      "bgHover": {
+        "$value": "{color.blue.600}"
+      },
+      "bgActive": {
+        "$value": "{color.blue.700}"
+      },
+      "fg": {
+        "$value": "{color.neutral.0}"
+      }
+    },
+    "secondary": {
+      "bg": {
+        "$value": "{color.neutral.0}"
+      },
+      "bgHover": {
+        "$value": "{color.neutral.100}"
+      },
+      "fg": {
+        "$value": "{color.neutral.800}"
+      },
+      "border": {
+        "$value": "{color.neutral.500}"
+      }
+    },
+    "critical": {
+      "bg": {
+        "$value": "{color.red.600}"
+      },
+      "bgHover": {
+        "$value": "{color.red.700}"
+      },
+      "fg": {
+        "$value": "{color.neutral.0}"
+      }
+    }
+  },
+  "status": {
+    "info": {
+      "bg": {
+        "$value": "{color.blue.50}"
+      },
+      "fg": {
+        "$value": "{color.blue.700}"
+      },
+      "border": {
+        "$value": "{color.blue.200}"
+      }
+    },
+    "success": {
+      "bg": {
+        "$value": "{color.green.50}"
+      },
+      "fg": {
+        "$value": "{color.green.700}"
+      },
+      "border": {
+        "$value": "{color.green.200}"
+      }
+    },
+    "warning": {
+      "bg": {
+        "$value": "{color.amber.50}"
+      },
+      "fg": {
+        "$value": "{color.amber.700}"
+      },
+      "border": {
+        "$value": "{color.amber.200}"
+      }
+    },
+    "critical": {
+      "bg": {
+        "$value": "{color.red.50}"
+      },
+      "fg": {
+        "$value": "{color.red.700}"
+      },
+      "border": {
+        "$value": "{color.red.200}"
+      }
+    }
+  },
+  "control": {
+    "$description": "Minimum height of an interactive control. md is the default; sm is for toolbars, lg for touch.",
+    "sm": {
+      "$value": "{space.7}"
+    },
+    "md": {
+      "$value": "{space.9}"
+    },
+    "lg": {
+      "$value": "{space.11}"
+    },
+    "indicator": {
+      "$value": "{space.4}",
+      "$description": "Added in 4.0. The drawn box or dot of a checkbox, radio or switch - the part the real input is visually replaced by. It was a 16px literal in three stylesheets, and its absence meant every value derived from it (a hint indent, a label offset) had to be precomputed by hand."
+    },
+    "track": {
+      "$value": "{space.12}",
+      "$description": "Added in 4.0. The switch track. A control dimension rather than a padding role, which is why it is here and not in padding.* where the drift report's 48px suggested putting it."
+    }
+  },
+  "textSize": {
+    "$description": "Type sizes by role. A component switches density by role, never by px.",
+    "caption": {
+      "$value": "{fontSize.md}"
+    },
+    "body": {
+      "$value": "{fontSize.sm}"
+    },
+    "dense": {
+      "$value": "{fontSize.xs}"
+    },
+    "label": {
+      "$value": "{fontSize.xs}"
+    },
+    "heading": {
+      "$value": "{fontSize.lg}"
+    },
+    "display": {
+      "$value": "{fontSize.xl}"
+    }
+  },
+  "textLeading": {
+    "tight": {
+      "$value": "{lineHeight.tight}"
+    },
+    "normal": {
+      "$value": "{lineHeight.normal}"
+    }
+  },
+  "textWeight": {
+    "$description": "Added in 4.0. Previously font-weight was a literal in 40 places, four of them off-scale.",
+    "body": {
+      "$value": "{fontWeight.regular}"
+    },
+    "emphasis": {
+      "$value": "{fontWeight.medium}"
+    },
+    "heading": {
+      "$value": "{fontWeight.semibold}"
+    }
+  },
+  "fontFamily": {
+    "$description": "Added in 4.0. Previously hardcoded in the stylesheet renderer, so it was the one value no consumer could theme.",
+    "sans": {
+      "$type": "fontFamily",
+      "$value": [
+        "system-ui",
+        "-apple-system",
+        "Segoe UI",
+        "Roboto",
+        "sans-serif"
+      ]
+    }
+  },
+  "breakpoint": {
+    "$description": "Emitted for documentation and JS. Container queries use the literals; drift.test.ts keeps the two in step.",
+    "sm": {
+      "$value": "{breakpoint.sm}"
+    },
+    "md": {
+      "$value": "{breakpoint.md}"
+    },
+    "lg": {
+      "$value": "{breakpoint.lg}"
+    }
+  },
+  "gap": {
+    "hairline": {
+      "$value": "{space.0-5}",
+      "$description": "Added in 4.0. The only sub-4px step, and the only one a component may use: it exists for a dot beside a label, nothing larger."
+    },
+    "tight": {
+      "$value": "{space.1}"
+    },
+    "snug": {
+      "$value": "{space.2}"
+    },
+    "normal": {
+      "$value": "{space.3}"
+    },
+    "loose": {
+      "$value": "{space.4}"
+    }
+  },
+  "padding": {
+    "inline": {
+      "$value": "{space.3}"
+    },
+    "block": {
+      "$value": "{space.2}"
+    },
+    "section": {
+      "$value": "{space.6}"
+    },
+    "page": {
+      "$value": "{space.24}",
+      "$description": "Added in 4.0 for full-height empty states."
+    },
+    "gutter": {
+      "$value": "{space.8}",
+      "$description": "Added in 4.0. The room a native select's dropdown arrow needs. Recurs in Select, Combobox and DatePicker for one reason, which is what makes it a role rather than three sites that happened to pick 32px."
+    },
+    "hero": {
+      "$value": "{space.12}",
+      "$description": "Added in 4.0 for a full-height empty state's vertical breathing room. Narrowly justified: the other 48px in the codebase is a Switch track width, which is a control dimension and is in DS-GAPS.md rather than forced in here."
+    }
+  },
+  "radius": {
+    "control": {
+      "$value": "{radius.md}"
+    },
+    "surface": {
+      "$value": "{radius.lg}"
+    },
+    "pill": {
+      "$value": "{radius.full}"
+    },
+    "indicator": {
+      "$value": "{radius.sm}",
+      "$description": "Added in 4.0. The corner of a small drawn control - a checkbox box, a radio dot's ring. Was a 4px literal, which was never on the radius scale at all; radius.control (6px) reads as too round on a 16px box, and the 1px difference from 3px is not a design decision worth a new primitive."
+    }
+  },
+  "elevation": {
+    "raised": {
+      "$value": "{shadow.sm}"
+    },
+    "overlay": {
+      "$value": "{shadow.md}"
+    },
+    "modal": {
+      "$value": "{shadow.lg}"
+    }
+  },
+  "duration": {
+    "$description": "Added in 4.0. instant is a state flip the user should not perceive as motion; fast is the default for hover and focus; normal for anything that moves position or size; slow for a full-surface transition. spin and sweep are loop lengths, not transitions.",
+    "instant": {
+      "$value": "{duration.instant}"
+    },
+    "fast": {
+      "$value": "{duration.fast}"
+    },
+    "normal": {
+      "$value": "{duration.normal}"
+    },
+    "slow": {
+      "$value": "{duration.slow}"
+    },
+    "spin": {
+      "$value": "{duration.spin}"
+    },
+    "sweep": {
+      "$value": "{duration.sweep}"
+    }
+  },
+  "easing": {
+    "$description": "Added in 4.0.",
+    "standard": {
+      "$value": "{easing.standard}"
+    },
+    "enter": {
+      "$value": "{easing.decelerate}"
+    },
+    "exit": {
+      "$value": "{easing.accelerate}"
+    },
+    "loop": {
+      "$value": "{easing.linear}"
+    }
+  },
+  "layer": {
+    "$description": "Added in 4.0. A z-index above 4 must name one of these.",
+    "base": {
+      "$value": "{layerStep.base}"
+    },
+    "raised": {
+      "$value": "{layerStep.raised}"
+    },
+    "sticky": {
+      "$value": "{layerStep.sticky}"
+    },
+    "rail": {
+      "$value": "{layerStep.rail}"
+    },
+    "overlay": {
+      "$value": "{layerStep.overlay}"
+    },
+    "toast": {
+      "$value": "{layerStep.toast}"
+    }
+  },
+  "$extensions": {
+    "com.bighat.contrast": {
+      "$description": "Every foreground/background relationship the system promises to keep legible. contrast.test.ts iterates this list and fails the build, so an undeclared pair is a review comment rather than a production bug. requirement maps to the WCAG rule that actually applies: a focus ring is non-text at 3:1, not 4.5:1.",
+      "standard": "WCAG 2.1 AA",
+      "thresholds": {
+        "bodyText": 4.5,
+        "largeText": 3,
+        "nonText": 3
+      },
+      "pairs": [
+        [
+          "text.primary",
+          "surface.base",
+          "bodyText"
+        ],
+        [
+          "text.primary",
+          "surface.sunken",
+          "bodyText"
+        ],
+        [
+          "text.primary",
+          "surface.raised",
+          "bodyText"
+        ],
+        [
+          "text.secondary",
+          "surface.base",
+          "bodyText"
+        ],
+        [
+          "text.secondary",
+          "surface.raised",
+          "bodyText"
+        ],
+        [
+          "text.muted",
+          "surface.base",
+          "bodyText"
+        ],
+        [
+          "text.muted",
+          "surface.sunken",
+          "bodyText"
+        ],
+        [
+          "text.muted",
+          "surface.raised",
+          "bodyText"
+        ],
+        [
+          "text.inverse",
+          "surface.inverse",
+          "bodyText"
+        ],
+        [
+          "text.link",
+          "surface.base",
+          "bodyText"
+        ],
+        [
+          "action.primary.fg",
+          "action.primary.bg",
+          "bodyText"
+        ],
+        [
+          "action.primary.fg",
+          "action.primary.bgHover",
+          "bodyText"
+        ],
+        [
+          "action.primary.fg",
+          "action.primary.bgActive",
+          "bodyText"
+        ],
+        [
+          "action.secondary.fg",
+          "action.secondary.bg",
+          "bodyText"
+        ],
+        [
+          "action.secondary.fg",
+          "action.secondary.bgHover",
+          "bodyText"
+        ],
+        [
+          "action.critical.fg",
+          "action.critical.bg",
+          "bodyText"
+        ],
+        [
+          "action.critical.fg",
+          "action.critical.bgHover",
+          "bodyText"
+        ],
+        [
+          "status.info.fg",
+          "status.info.bg",
+          "bodyText"
+        ],
+        [
+          "status.success.fg",
+          "status.success.bg",
+          "bodyText"
+        ],
+        [
+          "status.warning.fg",
+          "status.warning.bg",
+          "bodyText"
+        ],
+        [
+          "status.critical.fg",
+          "status.critical.bg",
+          "bodyText"
+        ],
+        [
+          "border.strong",
+          "surface.base",
+          "nonText"
+        ],
+        [
+          "border.strong",
+          "surface.raised",
+          "nonText"
+        ],
+        [
+          "border.focus",
+          "surface.base",
+          "nonText"
+        ],
+        [
+          "border.focus",
+          "surface.raised",
+          "nonText"
+        ],
+        [
+          "action.secondary.border",
+          "action.secondary.bg",
+          "nonText"
+        ]
+      ]
+    }
+  }
+}

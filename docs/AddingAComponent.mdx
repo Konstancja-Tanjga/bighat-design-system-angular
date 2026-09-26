@@ -1,0 +1,81 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Contributing/Adding a component" />
+
+# Adding a component
+
+## First, the bar
+
+A component earns its place when a product would otherwise build a worse
+version of it — not when the library looks incomplete without it.
+
+That means the argument for a new component is evidence, not symmetry.
+`DS-GAPS.md` records what was reached for, what got hand-rolled instead, and
+what the hand-rolled version does worse. The last part is the only argument
+that counts. "Every design system has a Stepper" is not one.
+
+## The order, and why it is this order
+
+**1. Write the contract first.** `packages/spec/components/<name>.json`, before
+either implementation. Purpose, what it is *not* for, anatomy, states, the
+keyboard map, the ARIA contract, the tokens it consumes.
+
+This is the step that used to be skipped, and skipping it is what made "port it
+to Angular" read as a rewrite. In 3.2.0 the keyboard map, the announcement
+strategy and the DOM contract existed only inside `.tsx` — so a second
+implementer had to read React and guess which parts were the design and which
+were incidental. Writing the contract first makes the second implementation a
+translation.
+
+`node scripts/validate.mjs` tells you what is still missing.
+
+**2. CSS in `@bighatpoland/css`.** BEM parts matching the contract's `anatomy`,
+tokens only. The drift gate will fail the build on a literal, which is the
+intended way to find out that the system is missing a role.
+
+**3. Implement in one framework.** Either one. The contract does not care which
+came first, and building React first out of habit is how the Angular version
+inherits React's shape.
+
+**4. Implement in the other.** Idiomatically, not identically — see
+`packages/ui-angular/README.md` for the mapping rules. A prop expressed as
+content projection in Angular and a `ReactNode` in React is the same prop; the
+contract's `react:` and `angular:` fields record both, and the parity check
+reads them.
+
+**5. Stories with the same names in both.** `scripts/check-parity.mjs` asserts
+it. A story in one Storybook and not the other is a variant one framework's
+users cannot see documented. Genuine divergence goes in
+`implementations.allowedStoryDivergence` with a reason.
+
+**6. Tests for every state in the contract.** 3.2.0 had tests for 18 of 41
+components, and the gaps included `Dialog`, `Select`, `RadioGroup`, `Slider`
+and `DatePicker` — the highest-risk keyboard and focus surfaces in the library.
+A state listed in the contract and not asserted in a test is a state nobody is
+watching.
+
+**7. Docs.** The per-component MDX template, same sections in the same order:
+purpose · use this / use something else · anatomy · variants · states ·
+keyboard · ARIA · do and don't with reasons · tokens consumed · related.
+
+**8. Set `implementations.status`.** And let the parity check confirm it rather
+than asserting it by hand. `parity` is a claim about two codebases, and a claim
+nobody executes is already false somewhere.
+
+## Naming
+
+PascalCase, and the same name in all four places: the Storybook title, the
+React export, the Angular selector stem, the contract filename. 3.2.0's story
+titles disagreed with its export names in twelve places — `Toolbar` shipped as
+"Function Bar", `SegmentedControl` as "Segmented Button" — so searching
+Storybook for the thing you were importing found nothing.
+
+Where the designer-facing word is genuinely better, it goes in `aliases` and
+search matches both. The identifier stays the identifier.
+
+## What does not need a component
+
+A layout. A one-off arrangement of existing components is a page, and putting
+it in the library means owning every consumer's version of it forever. If it
+recurs enough to matter, it is a template — `Templates/` exists for exactly
+that, and templates are allowed to be opinionated in ways components are not.

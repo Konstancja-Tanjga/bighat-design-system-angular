@@ -1,0 +1,45 @@
+/**
+ * The only global rules the system ships.
+ *
+ * A design system that restyles a host app's `h1` is a liability, so this
+ * file sets nothing but the surface it owns and the focus behaviour every
+ * component depends on.
+ */
+
+.bh-root {
+  background: var(--bh-surface-base);
+  color: var(--bh-text-primary);
+  font-family: var(--bh-font-family);
+  font-size: var(--bh-text-size-caption);
+  line-height: 1.5;
+}
+
+/* Focus is never removed, only moved onto a ring that clears 3:1 in both
+   themes. `:focus-visible` keeps it off mouse users without hiding it from
+   keyboard users — the mistake that made `outline: none` infamous. */
+.bh-focusable:focus-visible {
+  outline: 2px solid var(--bh-border-focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bh-root *,
+  .bh-root *::before,
+  .bh-root *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.bh-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}

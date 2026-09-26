@@ -1,0 +1,48 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Layering" />
+
+# Layering
+
+New in 4.0. Component CSS carried ten raw `z-index` values ranging from `1` to
+`1000`, with no document anywhere saying which sat above which — the ordering
+existed, but only in the values themselves.
+
+## The scale
+
+| token | value | what sits here |
+| --- | --- | --- |
+| `layer.base` | 0 | page content |
+| `layer.raised` | 10 | a card or row lifted on hover |
+| `layer.sticky` | 30 | a table's sticky header, a sticky toolbar |
+| `layer.rail` | 40 | the shell's navigation rail and app bar |
+| `layer.overlay` | 100 | side panels, menus, tooltips |
+| `layer.toast` | 1000 | toasts. Above everything, because a toast that a dialog covers is a toast nobody reads |
+
+Gaps of ten so a consumer can slot something between two layers without
+renumbering the scale.
+
+## Local values stay local
+
+Values from `-4` to `4` are exempt from the gate. A component stacking its own
+children — a table's header cell over its own rows, a checkbox's drawn box under
+its own input — is expressing sibling order inside its own stacking context.
+Naming that globally would be worse, not better: it would imply a relationship
+to the rest of the application that does not exist.
+
+Anything above 4 is a claim about where the component sits relative to
+everything else, and that belongs on the scale above. `z-index: 1000` written
+by hand is how arms races start.
+
+## Dialog has no z-index at all
+
+`Dialog` is built on the native `<dialog>` element in both libraries, which
+renders in the browser's top layer — above every stacking context on the page,
+regardless of `z-index`. So the component declares none, and cannot be covered
+by anything.
+
+This is also why `Dialog` does not use `@angular/cdk/overlay` in the Angular
+library. The CDK re-implements focus trapping, scroll blocking and layering in
+TypeScript, and renders into a container the token stylesheet would then need
+to know about. The platform now does all four. The CDK is still the right tool
+for `Tooltip` and `Menu`, where there is no platform equivalent.

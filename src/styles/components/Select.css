@@ -1,0 +1,25 @@
+.bh-select-wrapper {
+  position: relative;
+  display: block;
+}
+
+.bh-select {
+  appearance: none;
+  padding-right: var(--bh-padding-gutter);
+  cursor: pointer;
+}
+
+/* Pointer-events off so the chevron never intercepts the click that should
+   open the native picker. */
+.bh-select__chevron {
+  position: absolute;
+  top: 50%;
+  right: var(--bh-padding-inline);
+  width: 8px;
+  height: 8px;
+  margin-top: calc(-1 * var(--bh-gap-snug));
+  border-right: 2px solid var(--bh-text-secondary);
+  border-bottom: 2px solid var(--bh-text-secondary);
+  transform: rotate(45deg);
+  pointer-events: none;
+}

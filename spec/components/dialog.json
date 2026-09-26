@@ -1,0 +1,140 @@
+{
+  "$schema": "../schema.json",
+  "name": "Dialog",
+  "aliases": [
+    "Modal"
+  ],
+  "layer": "feedback",
+  "purpose": "A decision or a short task that must finish before the page continues.",
+  "notFor": [
+    "Anything the user might want to keep open while working — that is SidePanel",
+    "A confirmation that needs no decision — that is Toast",
+    "A form long enough to scroll on a laptop — that is a route"
+  ],
+  "composition": "composite",
+  "anatomy": [
+    {
+      "part": "bh-dialog",
+      "element": "dialog",
+      "note": "The native element, not a div with role=dialog. Four things come free and are hard to hand-roll: focus trapping, the rest of the page going inert, a cancellable Escape, and the top layer — which is why there is no z-index in this component's CSS."
+    },
+    {
+      "part": "bh-dialog__header",
+      "element": "header"
+    },
+    {
+      "part": "bh-dialog__title",
+      "element": "h2",
+      "note": "Referenced by aria-labelledby. Level 2 because the dialog starts a new outline."
+    },
+    {
+      "part": "bh-dialog__close",
+      "element": "button",
+      "required": false
+    },
+    {
+      "part": "bh-dialog__body",
+      "element": "div",
+      "note": "The only scrollable part."
+    },
+    {
+      "part": "bh-dialog__footer",
+      "element": "footer",
+      "required": false,
+      "note": "Actions in reading order: primary last on the inline end."
+    }
+  ],
+  "props": {
+    "open": {
+      "kind": "model",
+      "default": false,
+      "angular": "open = model<boolean>(false)"
+    },
+    "onClose": {
+      "kind": "event",
+      "required": true,
+      "meaning": "Escape, backdrop click, or the close button",
+      "note": "Required. A dialog that cannot be dismissed is a dialog that traps a keyboard user.",
+      "angular": "closed = output<void>()"
+    },
+    "title": {
+      "kind": "string",
+      "required": true,
+      "angular": "input.required<string>()"
+    },
+    "size": {
+      "kind": "size",
+      "values": [
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md",
+      "angular": "input<DialogSize>('md')"
+    },
+    "children": {
+      "kind": "slot",
+      "content": "text",
+      "required": true,
+      "angular": "<ng-content>"
+    },
+    "footer": {
+      "kind": "slot",
+      "content": "actions",
+      "required": false,
+      "angular": "<ng-content select=\"[bhFooter]\">"
+    },
+    "dismissible": {
+      "kind": "boolean",
+      "default": true,
+      "note": "When false, Escape and the backdrop stop closing it, but the close button stays — removing every exit is never correct."
+    }
+  },
+  "states": [
+    "default",
+    "loading"
+  ],
+  "keyboard": {
+    "Escape": "Closes, unless dismissible is false. Native to <dialog>, cancellable.",
+    "Tab": "Cycles inside the dialog only. Native.",
+    "Shift+Tab": "Cycles backwards inside the dialog only."
+  },
+  "aria": {
+    "role": "dialog (modal)",
+    "attributes": {
+      "aria-labelledby": "the title id",
+      "aria-describedby": "the body id, when the body is a single statement rather than a form"
+    },
+    "labelling": "From the title. Required.",
+    "focus": "On open, focus moves to the first focusable element in the body, or the dialog itself if there is none — never to the close button, which invites accidental dismissal. On close, focus returns to the element that opened it; the opener is captured on open, not assumed to still be document.activeElement.",
+    "announcements": "None. The dialog's own role announces it; a live region on top of that double-announces.",
+    "wcag": [
+      "2.1.2",
+      "2.4.3",
+      "2.4.7",
+      "4.1.2"
+    ]
+  },
+  "tokensUsed": [
+    "surface.overlay",
+    "text.primary",
+    "border.subtle",
+    "elevation.modal",
+    "radius.surface",
+    "padding.section",
+    "gap.normal",
+    "layer.overlay",
+    "duration.normal",
+    "easing.enter"
+  ],
+  "content": {
+    "title": "A question or a noun phrase, sentence case, no trailing period. 'Delete this workspace?'",
+    "actions": "The primary action names the verb: 'Delete workspace', never 'OK'. Cancel is always 'Cancel'."
+  },
+  "implementations": {
+    "version": "0.1.0",
+    "status": "parity",
+    "alsoImplementedIn": "react"
+  },
+  "interactive": true
+}

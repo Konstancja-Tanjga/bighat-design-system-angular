@@ -1,0 +1,102 @@
+{
+  "$schema": "../schema.json",
+  "name": "Select",
+  "layer": "control",
+  "purpose": "Choosing one value from a short, known list. Native element underneath.",
+  "notFor": [
+    "Search",
+    "Multi-select",
+    "Async or very long option lists"
+  ],
+  "composition": "leaf",
+  "anatomy": [
+    {
+      "part": "bh-field",
+      "element": "div"
+    },
+    {
+      "part": "bh-field__label",
+      "element": "label"
+    },
+    {
+      "part": "bh-field__required",
+      "element": "span"
+    },
+    {
+      "part": "bh-field__description",
+      "element": "p"
+    },
+    {
+      "part": "bh-select-wrapper",
+      "element": "div"
+    },
+    {
+      "part": "bh-select",
+      "element": "select",
+      "required": false
+    },
+    {
+      "part": "bh-select__chevron",
+      "element": "span"
+    },
+    {
+      "part": "bh-field__error",
+      "element": "p"
+    }
+  ],
+  "props": {
+    "label": {
+      "kind": "string"
+    },
+    "options": {
+      "kind": "data",
+      "angular": "input.required<BhSelectOption[]>() — data, not projected content: only <option> and <optgroup> are valid children of a native <select>, and Angular’s projection wrapper is neither"
+    },
+    "placeholder": {
+      "kind": "string",
+      "note": "Rendered as a disabled first option."
+    },
+    "description": {
+      "kind": "slot",
+      "content": "TODO",
+      "angular": "<ng-content select=\"[bhDescription]\">"
+    },
+    "error": {
+      "kind": "string"
+    }
+  },
+  "states": [
+    "default"
+  ],
+  "keyboard": {
+    "Arrow keys": "Moves between options. Native.",
+    "Enter": "Commits. Native."
+  },
+  "aria": {
+    "role": "combobox (implicit, from <select>)",
+    "attributes": {
+      "aria-hidden": "true",
+      "aria-invalid": "error",
+      "aria-describedby": "describedBy"
+    },
+    "labelling": "From the associated <label>, which is required. There is no aria-label prop: a select whose name lives in an attribute is a select nobody can point voice control at (WCAG 2.5.3).",
+    "focus": "Ring on the wrapper, driven from :focus-visible on the native select via a sibling selector, so it cannot desynchronise from real focus.",
+    "announcements": "None. The native select announces its own expanded state and option count; a live region on top of that double-announces. An error is read from aria-describedby on focus, not announced when it appears.",
+    "wcag": [
+      "1.3.1",
+      "2.5.3",
+      "3.3.1",
+      "3.3.2",
+      "4.1.2"
+    ]
+  },
+  "implementations": {
+    "version": "1.0.0",
+    "status": "partial",
+    "alsoImplementedIn": "react"
+  },
+  "tokensUsed": [
+    "text.secondary"
+  ],
+  "interactive": true
+}

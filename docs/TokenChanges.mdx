@@ -1,0 +1,73 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Contributing/Changing a token" />
+
+# Changing a token
+
+The token layer has one source and four generated outputs. Editing an output is
+the mistake this page exists to prevent.
+
+```
+tokens/primitive.tokens.json   ─┐
+tokens/semantic.tokens.json    ─┼─▶  dist/tokens.css        the runtime API
+tokens/theme.dark.tokens.json  ─┘    dist/tokens.scss       Angular consumers
+                                     dist/tokens.ts         types + cssVar()
+                                     dist/tokens.flat.json  Figma, Style Dictionary
+```
+
+`npm run tokens` regenerates all four. `npm run tokens:check` runs in CI and
+fails if a committed output has drifted from the source, so a hand-edit to
+`tokens.css` turns the build red rather than surviving until someone
+regenerates.
+
+## Adding a semantic token
+
+1. Add it to `semantic.tokens.json` as a `{reference}` to a primitive. A
+   semantic token with a literal value is a primitive in the wrong file.
+2. If it renders text or a control boundary, add a pair to the `$extensions`
+   contrast list. This is the step that makes it a guarantee instead of an
+   intention.
+3. `npm run tokens && npm test`.
+4. Add it to the relevant Foundations page. A token nobody documented is a
+   token nobody will use, and it will be reinvented as a literal.
+5. Add it to the `tokensUsed` list of every contract that consumes it.
+
+## Adding a primitive
+
+Rarer, and it needs an argument. A new primitive means the existing scale could
+not express something — which is sometimes true and usually means the semantic
+layer is missing a role instead.
+
+The 4.0 additions and their justifications, as the standard to meet:
+
+- `space.0-5` (2px) — seven components already used 2px for a dot beside a
+  label. Snapping to 4px would have visibly changed `Badge`. Added as the only
+  sub-step on the scale, with a note that nothing larger may use it.
+- `space.7 / 9 / 11` (28/36/44px) — the control heights, which were hardcoded
+  as px strings in `semantic.ts` and so bypassed the 4px scale entirely while
+  being exactly on it.
+- `space.24` (96px) — full-height empty states.
+- `duration.*`, `easing.*` — motion had a primitive scale that never reached
+  the emitted CSS, so nothing could reference it.
+- `layerStep.*` — ten raw z-index values with the ordering living only in the
+  numbers.
+
+Each one names a thing the codebase was already doing without a token. That is
+the bar: not "we might need this", but "here are the places already doing it".
+
+## When there is no role for what you need
+
+Stop and say so. `DS-GAPS.md`, with the same three parts every entry has: what
+was reached for, what got hand-rolled instead, what the hand-rolled version
+does worse.
+
+Reaching one layer down to a primitive is the thing this whole structure exists
+to prevent, and doing it once removes the guarantee for every consumer, not
+just the one component.
+
+## Renaming
+
+A major, with an alias that resolves for the whole following major line —
+`legacyAliases` in `build-tokens.mjs`. A token that changes name without a
+bridge breaks every consumer stylesheet silently, because CSS does not error on
+an unknown custom property. It just renders nothing.

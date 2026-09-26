@@ -1,0 +1,278 @@
+/**
+ * The wrapper is the query container.
+ *
+ * `inline-size` and not `size`: the table's height is its content, and a
+ * container that queries both axes cannot be sized by what is inside it.
+ */
+.bh-table-wrapper {
+  container-type: inline-size;
+  border: 1px solid var(--bh-border-subtle);
+  border-radius: var(--bh-radius-surface);
+  background: var(--bh-surface-base);
+}
+
+/* Wide tables scroll inside their own container so the page body never gains
+   a horizontal scrollbar. */
+.bh-table-wrapper--scroll {
+  overflow-x: auto;
+}
+
+/* Sticky needs a scroll container with a height, which only the consumer can
+   decide — so the wrapper opts in and the header sticks to whatever that is. */
+.bh-table-wrapper--sticky {
+  overflow-y: auto;
+}
+
+.bh-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--bh-font-family);
+  font-size: var(--bh-text-size-body);
+  line-height: var(--bh-text-leading-normal);
+  color: var(--bh-text-primary);
+}
+
+.bh-table__caption {
+  padding: var(--bh-padding-inline);
+  text-align: left;
+  font-size: var(--bh-text-size-caption);
+  font-weight: var(--bh-text-weight-heading);
+  color: var(--bh-text-primary);
+}
+
+.bh-table th,
+.bh-table td {
+  padding: var(--bh-padding-block) var(--bh-padding-inline);
+  border-bottom: 1px solid var(--bh-border-subtle);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.bh-table--compact {
+  font-size: var(--bh-text-size-dense);
+}
+
+.bh-table--compact th,
+.bh-table--compact td {
+  padding: var(--bh-gap-hairline) var(--bh-padding-inline);
+}
+
+.bh-table th[data-align='end'],
+.bh-table td[data-align='end'] {
+  text-align: right;
+}
+
+/* A column of figures wants aligned digits, not only aligned edges. */
+.bh-table td[data-numeric] {
+  font-variant-numeric: tabular-nums;
+}
+
+.bh-table thead th {
+  background: var(--bh-surface-sunken);
+  color: var(--bh-text-secondary);
+  font-size: var(--bh-text-size-label);
+  font-weight: var(--bh-text-weight-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.bh-table-wrapper--sticky thead th {
+  position: sticky;
+  top: 0;
+  /* Above the cells it scrolls over, below any popover the row opens. */
+  z-index: 1;
+}
+
+.bh-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.bh-table tbody tr:hover td {
+  background: var(--bh-surface-sunken);
+}
+
+/* Selected outranks hover: the reader needs to see what they picked while
+   the pointer is somewhere else. */
+.bh-table tbody tr[data-selected] td,
+.bh-table tbody tr[data-selected]:hover td {
+  background: var(--bh-status-info-bg);
+}
+
+.bh-table tfoot td {
+  border-top: 1px solid var(--bh-border-strong);
+  border-bottom: 0;
+  background: var(--bh-surface-base);
+  font-weight: var(--bh-text-weight-heading);
+}
+
+.bh-table__sort {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bh-gap-tight);
+  padding: var(--bh-gap-hairline) var(--bh-gap-tight);
+  margin: calc(-1 * var(--bh-gap-hairline)) calc(-1 * var(--bh-gap-tight));
+  border: 0;
+  border-radius: var(--bh-radius-control);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-transform: inherit;
+  letter-spacing: inherit;
+  cursor: pointer;
+}
+
+.bh-table__sort:hover {
+  color: var(--bh-text-primary);
+}
+
+.bh-table__sort-icon {
+  font-size: var(--bh-text-size-label);
+  opacity: 0.7;
+}
+
+.bh-table__state {
+  padding: 0;
+}
+
+.bh-table__state:hover {
+  background: transparent;
+}
+
+/* ---- selection, actions, disclosure: fixed-width utility columns ---- */
+
+.bh-table__select,
+.bh-table__disclose,
+.bh-table__disclose-head,
+.bh-table__actions,
+.bh-table__actions-head {
+  width: 1%;
+  white-space: nowrap;
+}
+
+.bh-table__actions,
+.bh-table__actions-head {
+  text-align: right;
+}
+
+.bh-table__disclose summary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--bh-control-sm);
+  height: var(--bh-control-sm);
+  border-radius: var(--bh-radius-control);
+  cursor: pointer;
+  color: var(--bh-text-muted);
+  list-style: none;
+}
+
+.bh-table__disclose summary::-webkit-details-marker {
+  display: none;
+}
+
+.bh-table__disclose details[open] summary {
+  color: var(--bh-text-primary);
+  transform: rotate(90deg);
+}
+
+/* The disclosure body has to escape its cell, which is one column wide. */
+.bh-table__disclose-body {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: var(--bh-padding-block) var(--bh-padding-section);
+  background: var(--bh-surface-sunken);
+}
+
+.bh-table--priority tbody tr {
+  position: relative;
+}
+
+/* Above the small breakpoint every column is in the grid, so the disclosure
+   would only repeat what is already visible. */
+.bh-table--priority .bh-table__disclose,
+.bh-table--priority .bh-table__disclose-head {
+  display: none;
+}
+
+/* ---- responsive="priority" ----
+   Secondary columns leave the grid; the disclosure appears to carry them. */
+@container (max-width: 480px) {
+  .bh-table--priority th[data-priority='2'],
+  .bh-table--priority td[data-priority='2'],
+  .bh-table--priority th[data-priority='3'],
+  .bh-table--priority td[data-priority='3'] {
+    display: none;
+  }
+
+  .bh-table--priority .bh-table__disclose,
+  .bh-table--priority .bh-table__disclose-head {
+    display: table-cell;
+  }
+}
+
+/* ---- responsive="stack" ----
+   Each row becomes its own block and every cell carries its header as a
+   label, so a value never appears without the thing it is a value of. */
+@container (max-width: 480px) {
+  .bh-table--stack thead {
+    /* Not display:none — that removes the header from the accessibility tree
+       as well, and the row cells still reference these headers. */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .bh-table--stack tbody tr {
+    display: block;
+    padding: var(--bh-padding-block) 0;
+    border-bottom: 1px solid var(--bh-border-strong);
+  }
+
+  .bh-table--stack tbody tr:last-child {
+    border-bottom: 0;
+  }
+
+  .bh-table--stack tbody td {
+    display: grid;
+    grid-template-columns: minmax(6rem, 40%) minmax(0, 1fr);
+    gap: var(--bh-gap-loose);
+    align-items: baseline;
+    border-bottom: 0;
+    padding: var(--bh-gap-hairline) var(--bh-padding-inline);
+    text-align: left;
+  }
+
+  /* The label comes from data-label, set only when the header is a string.
+     A header that is a node has nothing sensible to put here, so the cell
+     simply spans the full width instead of showing an empty gutter. */
+  .bh-table--stack tbody td[data-label]::before {
+    content: attr(data-label);
+    font-size: var(--bh-text-size-label);
+    font-weight: var(--bh-text-weight-heading);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--bh-text-muted);
+  }
+
+  .bh-table--stack tbody td:not([data-label]) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* An actions column has no value to label. */
+  .bh-table--stack tbody td[data-stacked-hidden] {
+    display: none;
+  }
+
+  .bh-table--stack tbody td[data-align='end'] {
+    text-align: left;
+  }
+
+  .bh-table--stack tfoot td {
+    display: block;
+  }
+}

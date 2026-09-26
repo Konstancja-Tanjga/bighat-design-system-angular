@@ -1,0 +1,46 @@
+name: Deploy Storybook
+
+# The Storybook is this system's primary artefact, so deployment is its own
+# workflow rather than a step at the end of CI: it needs Pages permissions,
+# it should not re-run on every pull request, and a failure here is a
+# different kind of problem from a failing test.
+
+on:
+  push: { branches: [main] }
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 24, cache: npm }
+      - run: npm ci
+
+      # Regenerates the conformance and drift pages from the audits, so the
+      # published numbers are this commit's numbers.
+      - run: npm run build-storybook
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: storybook-static }
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

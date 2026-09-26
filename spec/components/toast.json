@@ -1,0 +1,117 @@
+{
+  "$schema": "../schema.json",
+  "name": "Toast",
+  "layer": "feedback",
+  "purpose": "Ephemeral confirmation that something happened.",
+  "notFor": [
+    "Errors the user must act on in place \u2014 use StateBlock"
+  ],
+  "composition": "composite",
+  "anatomy": [
+    {
+      "part": "bh-toast-region",
+      "element": "ol"
+    },
+    {
+      "part": "bh-toast",
+      "element": "li"
+    },
+    {
+      "part": "bh-toast__content",
+      "element": "div"
+    },
+    {
+      "part": "bh-toast__title",
+      "element": "p"
+    },
+    {
+      "part": "bh-toast__description",
+      "element": "p"
+    },
+    {
+      "part": "bh-toast__close",
+      "element": "button[type=button]"
+    },
+    {
+      "part": "bh-toast-viewport",
+      "element": "div"
+    }
+  ],
+  "props": {
+    "tone": {
+      "kind": "tone",
+      "values": [
+        "info",
+        "success",
+        "warning",
+        "critical"
+      ],
+      "note": "critical routes to the assertive live region and never auto-dismisses."
+    },
+    "title": {
+      "kind": "string"
+    },
+    "description": {
+      "kind": "string"
+    },
+    "duration": {
+      "kind": "data",
+      "default": "5000, or null for critical"
+    }
+  },
+  "states": [
+    "default",
+    "hover"
+  ],
+  "keyboard": {
+    "Tab": "Reaches the action, then the dismiss button. The toast itself is not focusable and never takes focus.",
+    "Escape": "Dismisses the focused toast. Not a global handler: a document-level Escape would fight every dialog and menu on screen."
+  },
+  "aria": {
+    "role": "alert",
+    "attributes": {
+      "aria-live": "tone",
+      "aria-relevant": "additions",
+      "aria-label": "`Dismiss:",
+      "aria-hidden": "true"
+    },
+    "labelling": "From the toast title. Required.",
+    "focus": "Never steals focus \u2014 a toast that grabs focus interrupts whatever the user was doing, and the thing it interrupts is often the action the toast is about. The dismiss button is reachable by tab.",
+    "announcements": "Two live regions, not one with a bound politeness: info and success are polite, warning and critical assertive. A changing aria-live on an existing region is unreliable, since several screen readers only register a region when the node is inserted. Critical has no auto-dismiss, because dismissing an error on a timer is how a user finds out an hour later.",
+    "wcag": [
+      "1.4.13",
+      "2.2.1",
+      "4.1.3"
+    ]
+  },
+  "implementations": {
+    "version": "1.0.0",
+    "status": "implemented",
+    "alsoImplementedIn": "react"
+  },
+  "tokensUsed": [
+    "action.secondary.bgHover",
+    "border.strong",
+    "border.subtle",
+    "elevation.overlay",
+    "font.family",
+    "gap.snug",
+    "gap.tight",
+    "layer.toast",
+    "padding.inline",
+    "padding.section",
+    "radius.control",
+    "status.critical.fg",
+    "status.info.fg",
+    "status.success.fg",
+    "status.warning.fg",
+    "surface.overlay",
+    "text.muted",
+    "text.primary",
+    "text.secondary",
+    "text.sizeBody",
+    "text.sizeCaption",
+    "text.weightHeading"
+  ],
+  "interactive": true
+}

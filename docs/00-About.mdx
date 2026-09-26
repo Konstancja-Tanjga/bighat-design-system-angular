@@ -1,0 +1,168 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="About this system" />
+
+# Big Hat — Angular
+
+An Angular design system built from the same component contracts as its React
+sibling, and built to answer the question that follows the first one: **not "can
+you port a design system", but "what is actually different, and what did you
+refuse to change".**
+
+Eight components. Ninety-one semantic tokens from a
+[DTCG 2025.10](https://www.designtokens.org/) source. Eight classes of value
+that cannot be written as a literal anywhere in the library. Every component
+conforming to its WAI-ARIA APG pattern, checked on every build by an audit
+whose rules are Angular-specific.
+
+The sibling is **[Big Hat — React](https://konstancja-tanjga.github.io/bighat-design-system/)**,
+which has forty-one components. This one has eight, chosen because between them
+they exercise every hard case — after these, the rest is repetition.
+
+---
+
+## What is shared, and what is not
+
+The two systems share their **contracts** — `spec/components/*.json`, one file
+per component, carrying purpose, DOM anatomy, states, keyboard map, ARIA
+contract and the tokens consumed. Everything a second implementer would
+otherwise learn by reading `.tsx` and guessing which parts were the design and
+which were incidental.
+
+They also share, by copy rather than by dependency, the **token source** and the
+**stylesheet**. Eight stylesheets here rather than forty-five, because this
+library implements eight components and shipping the rest would assert a
+coverage it does not have.
+
+What is *not* shared is the behaviour layer, and this is the part worth reading.
+
+## Eight decisions where Angular is not React
+
+### 1. Button is a directive, not a component
+
+```html
+<button bhButton variant="secondary" tone="critical" [loading]="saving()">
+  Delete workspace
+</button>
+```
+
+React has to wrap: JSX has no way to attach behaviour to an element the
+consumer wrote. Angular does, and wrapping anyway costs `type`, `form`,
+`formaction`, `[routerLink]`, and a typed `(click)`. Every one of those becomes
+a pass-through prop, and a wrapper accumulates the entire native API one bug
+report at a time.
+
+The consumer's element stays theirs. The directive owns the class list and two
+loading attributes, and that is the whole contract.
+
+### 2. Form controls implement `FormValueControl`, not `ControlValueAccessor`
+
+```ts
+export class BhCheckbox implements FormCheckboxControl {
+  readonly value = model(false);   // the entire contract
+}
+```
+
+This is the place React gave the system no obligation at all. React has no
+forms framework, so `Checkbox.tsx` has nothing to say about forms; here the
+component *is* the integration point, and getting it wrong means the control
+works in every story and fails in a form.
+
+Signal Forms left experimental status in Angular 22. No providers array, no
+`forwardRef`, no four interface methods — and it still works inside existing
+reactive and template-driven forms, because the interop runs both ways. So
+"we cannot adopt this library until we migrate our forms" was never true.
+
+### 3. `StateBlock` renders three host elements, not one
+
+React varies a single element's `role` between `status`, `alert` and none.
+That is accidentally correct there, because changing `state` usually remounts
+the node anyway.
+
+Here it is a switch over three separate elements, because a *changing*
+`aria-live` on an existing region is unreliable — several screen readers only
+register a region when the node is inserted. More template than React needs,
+and correct rather than lucky.
+
+### 4. `Dialog` uses the platform, not the CDK
+
+Native `<dialog>` gives focus trapping, `inert` on the rest of the page, a
+cancellable Escape, and the top layer — which is why this component contains no
+`z-index` at all.
+
+`@angular/cdk/overlay` is the obvious Angular answer and the wrong one here: it
+re-implements all four in TypeScript and renders into a container the token
+stylesheet would have to be taught about. The CDK is still right for `Tooltip`
+and `Menu`, where the platform has no equivalent. It is a tool, not a house
+style.
+
+### 5. `Select` stays a native `<select>`
+
+A native select gets the platform's own picker on mobile and in assistive
+technology, which no custom listbox matches, and needs no keyboard
+implementation at all.
+
+This one produced a finding worth keeping: a `<select>` has the implicit role
+`combobox`, so the conformance audit initially reported it as failing the APG
+combobox pattern — Escape, ArrowDown-to-open, `aria-expanded` management. None
+of which a native select exposes for a component to implement. Auditing a
+native element against a custom-widget pattern reports a conforming component
+as broken, which is the fastest way to get an audit ignored. See
+**Accessibility → ARIA conformance**.
+
+### 6. `Toast` is an injectable service, not a hook
+
+React exposes a hook plus a provider, and can only be called from inside a
+component tree. Here it is a root-provided service plus a host component,
+reachable from an interceptor or a route guard — which is where most toasts in
+an ERP actually originate.
+
+### 7. `Table` takes a `TemplateRef`, and requires a row key
+
+`renderCell` as a function loses change detection on the cell contents;
+`#bhCell` with `let-row` does not. And `track` on object identity re-renders
+every row on any change, so `rowKey` is mandatory where React could fall back
+to an index.
+
+### 8. String unions, never enums
+
+An enum would force `[variant]="Variant.Secondary"` in every template, and
+would make the two libraries disagree about the same value.
+
+---
+
+## The ARIA audit is Angular-specific
+
+Its rules check mechanical failures that have no React equivalent:
+
+- a bound `aria-*` outside the small set Angular special-cases — everything
+  else needs `[attr.aria-…]`, or it is set as a property the DOM ignores
+- a bound `role`, which on a live region may never register
+- a DOM property bound as an attribute: `[attr.indeterminate]` renders an
+  attribute the browser ignores, and the control then announces "not checked"
+  while looking mixed
+- a component missing `ViewEncapsulation.None`, whose emulated-encapsulation
+  attributes would stop the shared stylesheet applying
+
+A merged report across both libraries would have had those four as empty cells
+in a React column, and the interesting half of the audit would have been the
+half nobody read.
+
+---
+
+## What this system does not claim
+
+**Eight components, not forty-one.** Six of eight contracts are complete; two
+are missing the fields no script can produce.
+
+**No screen reader has been run against it.** The announcement policies in the
+contracts are testable claims, and nobody has tested them. Static analysis
+finds what was never built; it does not find what sounds wrong in NVDA.
+
+**Nothing checks this library against its React sibling.** The two began as one
+repository with a script that read both and asserted they implemented the same
+contracts — same props, same story names, same keyboard maps. It caught nine
+real problems while it existed. That check is gone, the token source is
+duplicated, and a colour change is now two commits in two places with nothing
+comparing them. What was gained is that each system can be read on its own. It
+is a trade, and saying so is the point.

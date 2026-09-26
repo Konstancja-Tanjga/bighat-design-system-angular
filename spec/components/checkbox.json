@@ -1,0 +1,153 @@
+{
+  "$schema": "../schema.json",
+  "name": "Checkbox",
+  "layer": "control",
+  "purpose": "A single boolean the user sets, or one member of a set they choose from.",
+  "notFor": [
+    "An immediate setting that takes effect on toggle — that is Switch",
+    "Choosing exactly one of several options — that is RadioGroup",
+    "A filter chip in a toolbar — that is SegmentedControl"
+  ],
+  "composition": "leaf",
+  "anatomy": [
+    {
+      "part": "bh-checkbox-field",
+      "element": "div",
+      "note": "Wraps control, description and error so the three share one id namespace."
+    },
+    {
+      "part": "bh-checkbox",
+      "element": "div"
+    },
+    {
+      "part": "bh-checkbox__input",
+      "element": "input[type=checkbox]",
+      "note": "The real control. Visually replaced, never visually hidden with display:none, so it stays focusable and keeps native semantics."
+    },
+    {
+      "part": "bh-checkbox__box",
+      "element": "span",
+      "note": "aria-hidden. The drawn box; the input above is what a screen reader reads."
+    },
+    {
+      "part": "bh-checkbox__label",
+      "element": "label",
+      "note": "Associated by htmlFor/for. Required — a checkbox with no label is unusable by voice control (WCAG 2.5.3)."
+    },
+    {
+      "part": "bh-field__description",
+      "element": "p",
+      "required": false,
+      "note": "Referenced by aria-describedby."
+    },
+    {
+      "part": "bh-field__error",
+      "element": "p",
+      "required": false,
+      "note": "Referenced by aria-describedby, listed before the description so the failure is announced first."
+    }
+  ],
+  "props": {
+    "label": {
+      "kind": "slot",
+      "content": "text",
+      "required": true,
+      "note": "Required, not optional-with-aria-label. The visible label is the voice-control target.",
+      "angular": "<ng-content>"
+    },
+    "description": {
+      "kind": "slot",
+      "content": "text",
+      "required": false,
+      "angular": "<ng-content select=\"[bhDescription]\">"
+    },
+    "error": {
+      "kind": "string",
+      "required": false,
+      "note": "Presence sets aria-invalid and prepends the error id to aria-describedby.",
+      "angular": "input<string|undefined>()"
+    },
+    "indeterminate": {
+      "kind": "boolean",
+      "default": false,
+      "meaning": "mixed: some children checked",
+      "note": "A DOM property, not an attribute. React sets it in an effect; Angular must set it in an effect() on the host element. Rendering it as an attribute is the mistake that makes tri-state trees announce the wrong thing.",
+      "angular": "effect() writing el.indeterminate"
+    },
+    "checked": {
+      "kind": "model",
+      "default": false,
+      "meaning": "the value",
+      "angular": "value = model<boolean>(false), implementing FormCheckboxControl"
+    },
+    "required": {
+      "kind": "boolean",
+      "default": false,
+      "note": "Renders a decorative asterisk (aria-hidden) and sets the native required attribute."
+    },
+    "disabled": {
+      "kind": "boolean",
+      "default": false
+    }
+  },
+  "states": [
+    "default",
+    "hover",
+    "focus-visible",
+    "selected",
+    "indeterminate",
+    "disabled",
+    "invalid",
+    "readonly"
+  ],
+  "keyboard": {
+    "Space": "Toggles. Native.",
+    "Tab": "Moves focus to the input. Never to the drawn box."
+  },
+  "aria": {
+    "role": "checkbox",
+    "attributes": {
+      "aria-checked": "native, from the input. mixed while indeterminate",
+      "aria-invalid": "true when error is present",
+      "aria-describedby": "error id then description id, in that order"
+    },
+    "labelling": "From the associated label element. Required.",
+    "focus": "Ring on the drawn box, driven from :focus-visible on the input via a sibling selector — so the ring follows the real focus and cannot desynchronise.",
+    "announcements": "An error appearing is announced by the field, not by a live region: the message is in aria-describedby and read on focus.",
+    "wcag": [
+      "1.3.1",
+      "2.1.1",
+      "2.4.7",
+      "2.5.3",
+      "3.3.1",
+      "3.3.2",
+      "4.1.2"
+    ]
+  },
+  "tokensUsed": [
+    "action.primary.bg",
+    "action.primary.fg",
+    "border.strong",
+    "border.focus",
+    "status.critical.fg",
+    "surface.base",
+    "gap.snug",
+    "gap.hairline",
+    "radius.control",
+    "textSize.body",
+    "textSize.label",
+    "control.md",
+    "duration.fast",
+    "easing.standard"
+  ],
+  "content": {
+    "label": "Sentence case, no trailing period. Phrase it so that checked means yes.",
+    "error": "Say what to do: 'Accept the terms to continue', not 'This field is required'."
+  },
+  "implementations": {
+    "version": "0.1.0",
+    "status": "implemented",
+    "alsoImplementedIn": "react"
+  },
+  "interactive": true
+}

@@ -1,0 +1,324 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bighatpoland.github.io/spec/component.schema.json",
+  "title": "Big Hat component contract",
+  "description": "One file per component. This is the source both libraries are built from, and the answer to 'what should the Angular one do?' \u2014 anything a developer would otherwise learn by reading Button.tsx belongs in here. If a field can only be expressed in React terms, it is in the wrong file.",
+  "type": "object",
+  "required": [
+    "name",
+    "layer",
+    "purpose",
+    "notFor",
+    "composition",
+    "anatomy",
+    "props",
+    "states",
+    "aria",
+    "implementations"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Za-z]+$",
+      "description": "PascalCase. This is the Storybook title, the React export and the Angular selector stem, all three. A component whose name differs between them is a component nobody can find."
+    },
+    "aliases": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Other names the same thing goes by \u2014 the Figma layer name, the word the ERP domain uses, the label a previous version shipped under. Search matches these; nothing else does."
+    },
+    "layer": {
+      "enum": [
+        "control",
+        "frame",
+        "data",
+        "feedback"
+      ],
+      "description": "control: the everyday inputs. frame: the shell they sit in. data: tables and lists. feedback: state and notification. Replaces the flat Components/ + Data/ split, which put Pagination in a bucket of two."
+    },
+    "purpose": {
+      "type": "string",
+      "description": "One sentence. What it is for."
+    },
+    "notFor": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      },
+      "description": "What to use instead, and for what. The most load-bearing field in the file: a component without boundaries gets used for everything."
+    },
+    "composition": {
+      "enum": [
+        "leaf",
+        "composite"
+      ],
+      "description": "leaf renders one targetable element and takes native attribute passthrough plus a forwarded ref. composite renders a tree and takes named props only. Decides the React prop type and the Angular host/content strategy at once."
+    },
+    "anatomy": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "part",
+          "element"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "part": {
+            "type": "string",
+            "description": "BEM part name, e.g. bh-button__icon."
+          },
+          "element": {
+            "type": "string",
+            "description": "The DOM element. Not negotiable per framework."
+          },
+          "required": {
+            "type": "boolean",
+            "default": true
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "The DOM contract. Both libraries render this tree, which is what lets one stylesheet serve both."
+    },
+    "props": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "kind"
+        ],
+        "properties": {
+          "kind": {
+            "enum": [
+              "variant",
+              "tone",
+              "size",
+              "density",
+              "scope",
+              "enum",
+              "boolean",
+              "string",
+              "number",
+              "slot",
+              "event",
+              "data",
+              "model"
+            ],
+            "description": "The axis this prop varies, or its transport. The first five are the system's shared axes and are checked against vocabulary.ts. `enum` is a component-local closed set that is deliberately not a system axis - orientation, placement, granularity. Calling those `variant` was the migration's mistake and it made 30 false vocabulary violations: a component-local enumeration is fine, a component-local *tone* is not. `slot` and `model` are the two that differ most between frameworks."
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "default": {},
+          "required": {
+            "type": "boolean",
+            "default": false
+          },
+          "meaning": {
+            "type": "string",
+            "description": "What it controls. Not the type \u2014 the type is above."
+          },
+          "note": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string",
+            "description": "For kind: slot \u2014 what may go in it (icon, text, actions, rows)."
+          },
+          "decorative": {
+            "type": "boolean",
+            "description": "For kind: slot \u2014 whether its contents are hidden from assistive tech."
+          },
+          "react": {
+            "type": "string",
+            "description": "The React expression of this prop, if it is not mechanical."
+          },
+          "angular": {
+            "type": "string",
+            "description": "The Angular expression: an input(), an output(), an ng-content selector, or a model()."
+          }
+        }
+      }
+    },
+    "states": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "default",
+          "hover",
+          "focus-visible",
+          "active",
+          "selected",
+          "disabled",
+          "readonly",
+          "loading",
+          "invalid",
+          "empty",
+          "error",
+          "indeterminate"
+        ]
+      },
+      "description": "Every state that must be rendered in a story and asserted in a test. A state absent here is a state nobody drew."
+    },
+    "keyboard": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Key \u2192 what it does. Written once and asserted against both builds by the shared keyboard suite, which is the only way parity means anything."
+    },
+    "aria": {
+      "type": "object",
+      "required": [
+        "role"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "role": {
+          "type": "string"
+        },
+        "attributes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "labelling": {
+          "type": "string",
+          "description": "Where the accessible name comes from, and whether it is required."
+        },
+        "focus": {
+          "type": "string",
+          "description": "Focus order, trapping, and where focus goes on close."
+        },
+        "announcements": {
+          "type": "string",
+          "description": "Live region politeness and what gets announced when."
+        },
+        "wcag": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The success criteria this component is on the hook for, e.g. 1.4.1, 2.5.5."
+        }
+      }
+    },
+    "tokensUsed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Semantic token paths. Lets the drift gate work backwards: a token nothing uses is a candidate for removal, and a component using a token it never declared is a review comment."
+    },
+    "content": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "UX copy rules: sentence case, no trailing period, what an error message must contain."
+    },
+    "removed": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "replacement": {
+            "type": "string"
+          },
+          "deprecatedIn": {
+            "type": "string"
+          },
+          "removedIn": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "The deprecation record. Carried forward indefinitely: this is the field that answers 'why is there no variant=\"danger\"' three years from now."
+    },
+    "implementations": {
+      "type": "object",
+      "required": [
+        "react",
+        "angular"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "react": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Version it shipped in, or null."
+        },
+        "angular": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "status": {
+          "enum": [
+            "parity",
+            "partial",
+            "react-only",
+            "angular-only",
+            "spec-only",
+            "diverged"
+          ],
+          "description": "Asserted by scripts/check-parity.mjs against both builds, not written by hand and hoped for. `partial` is the status that was missing: an implementation that exists and is correct as far as it goes, but does not yet cover the whole contract. Without it the only honest options were to claim parity falsely or to call a working component react-only, and both hide the same thing - which props a consumer cannot use yet."
+        },
+        "divergence": {
+          "type": "string",
+          "description": "If status is diverged: what differs and why it is allowed to. An empty reason here is a bug."
+        },
+        "allowedStoryDivergence": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Story names that exist in one library only, with the reason in divergence. Every entry here is a place the two Storybooks deliberately differ, and the list is short by design."
+        },
+        "unimplemented": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "description": "Per framework, the contract props that framework does not implement yet. Read by the parity check, so a `partial` status has to say what is missing rather than just admitting that something is."
+        },
+        "symbols": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "The exported symbol name per framework, where it is not the component name. Toast is a hook plus a provider in React and a service plus a host component in Angular; neither exports a symbol called `Toast`, and a checker guessing the name would report both as missing."
+        },
+        "argumentOf": {
+          "type": "string",
+          "description": "For a component whose API is a function rather than props - Toast's notify({ tone, title, description }) - the function name. The props block then describes the argument's fields, which is what it already did; this field says so, instead of leaving a checker to report four props missing from both libraries."
+        }
+      }
+    },
+    "interactive": {
+      "type": "boolean",
+      "description": "Can this be focused or acted on. Badge, Divider and Skeleton cannot, and a single-state contract is correct for them - so the completeness gate needs to tell 'nobody wrote the states down' apart from 'there is one state'. A non-interactive component also needs no keyboard map, which is why both checks read this field."
+    }
+  }
+}

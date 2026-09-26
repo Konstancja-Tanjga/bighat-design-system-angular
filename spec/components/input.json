@@ -1,0 +1,111 @@
+{
+  "$schema": "../schema.json",
+  "name": "Input",
+  "layer": "control",
+  "purpose": "Single-line text entry with label, description and error wired to ARIA.",
+  "notFor": [
+    "Controls with their own keyboard model \u2014 date pickers, comboboxes"
+  ],
+  "composition": "leaf",
+  "anatomy": [
+    {
+      "part": "bh-field",
+      "element": "div"
+    },
+    {
+      "part": "bh-field__label",
+      "element": "label",
+      "required": false
+    },
+    {
+      "part": "bh-field__required",
+      "element": "span"
+    },
+    {
+      "part": "bh-field__description",
+      "element": "p"
+    },
+    {
+      "part": "bh-input",
+      "element": "input",
+      "required": false
+    },
+    {
+      "part": "bh-field__error",
+      "element": "p"
+    }
+  ],
+  "props": {
+    "label": {
+      "kind": "string",
+      "angular": "input.required<string>()"
+    },
+    "hideLabel": {
+      "kind": "boolean",
+      "default": false,
+      "note": "Hides visually, keeps it for assistive tech. Kept in React for the one legitimate case - a search field whose surrounding context already names it - and deliberately not carried into Angular, because in practice it is used to remove labels from ERP toolbars and the placeholder is then expected to do the job. A placeholder disappears on focus and is not a voice-control target (WCAG 2.5.3). Angular's Input.stories.ts documents the refusal under the same story name."
+    },
+    "description": {
+      "kind": "string",
+      "note": "A string, not a slot. It is referenced by aria-describedby, which needs a stable id on a single element \u2014 a projected node the consumer controls can be a fragment, several elements, or none, and none of those can be pointed at. Select and Checkbox agree.",
+      "angular": "input<string|undefined>()"
+    },
+    "error": {
+      "kind": "string",
+      "note": "Its presence is what sets aria-invalid.",
+      "angular": "input<string|undefined>()"
+    }
+  },
+  "states": [
+    "default",
+    "disabled",
+    "invalid"
+  ],
+  "keyboard": {
+    "Tab": "Moves focus to the input. Native."
+  },
+  "aria": {
+    "role": "textbox (implicit, from <input>)",
+    "labelling": "From the associated <label>, required. A placeholder is not a name: it disappears on focus and is not a voice-control target.",
+    "focus": "Ring on the input itself. Never removed on :focus-visible.",
+    "announcements": "None. The error is in aria-describedby, read on focus. Announcing a validation error as it appears interrupts typing, which is when it usually appears.",
+    "wcag": [
+      "1.3.1",
+      "2.4.7",
+      "2.5.3",
+      "3.3.1",
+      "3.3.2",
+      "4.1.2"
+    ],
+    "attributes": {
+      "aria-invalid": "true when error is present",
+      "aria-describedby": "error id then description id, in that order"
+    }
+  },
+  "implementations": {
+    "version": "1.0.0",
+    "status": "implemented",
+    "unimplemented": [
+      "hideLabel"
+    ],
+    "alsoImplementedIn": "react"
+  },
+  "tokensUsed": [
+    "border.strong",
+    "control.md",
+    "font.family",
+    "gap.hairline",
+    "gap.tight",
+    "padding.inline",
+    "radius.control",
+    "status.critical.fg",
+    "surface.base",
+    "surface.sunken",
+    "text.muted",
+    "text.primary",
+    "text.sizeBody",
+    "text.sizeCaption",
+    "text.weightEmphasis"
+  ],
+  "interactive": true
+}

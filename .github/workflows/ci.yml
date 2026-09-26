@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push: { branches: [main] }
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 24, cache: npm }
+      - run: npm ci
+
+      # Every committed artefact is regenerated and compared. A hand-edit to
+      # dist/tokens.css turns the build red rather than surviving until someone
+      # next runs the build.
+      - name: Tokens are in sync
+        run: npm run tokens:check
+
+      # Framework leakage, prop vocabulary, and any component that ships
+      # against an unfinished contract.
+      - name: Contracts are valid
+        run: npm run spec:validate
+
+      # Eight value classes across 45 stylesheets. A literal fails here.
+      - name: No token drift
+        run: npm run audit:drift && git diff --exit-code DRIFT-REPORT.md
+
+      # The published site's conformance and drift pages are generated from
+      # the audits, so they cannot claim numbers the build does not produce.
+      - name: Published reports match the build
+        run: npm run docs:check
+
+      # Contrast (26 pairs x 2 themes), the drift gate, and the contract-driven
+      # keyboard and anatomy suites.
+      - run: npm test
+
+      - run: npm run build
+      - run: npm run build-storybook

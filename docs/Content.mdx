@@ -1,0 +1,68 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Content & UX copy" />
+
+# Content & UX copy
+
+Framework-neutral by definition, and the section most likely to be skipped when
+a second library gets built — which is how one product ends up with two tones
+of voice.
+
+Per-component rules live in each contract's `content` field in
+`packages/spec/components/`, so they are enforced in review against a file
+rather than against memory.
+
+## Case and punctuation
+
+Sentence case everywhere. Not Title Case, not ALL CAPS.
+
+No trailing period on a label, a title, a button, or a single-line message. A
+period on a fragment reads as a typo; a period at the end of two sentences does
+not, so descriptions that run to a full sentence keep theirs.
+
+## Buttons name the verb and the object
+
+`Delete workspace`, not `Delete`. Not `OK`. Not `Submit`.
+
+A button in a dialog is read alongside the dialog title, and a user skimming
+sees only the button. `OK` beside `Delete this workspace?` means the user
+confirms an action they have to read backwards to identify.
+
+## Errors say what did not happen, and whether data changed
+
+> We could not load your invoices. Your data has not changed.
+
+Three things in order: what failed, in the user's terms; what state their data
+is in; what they can do. Never `Something went wrong`, which tells the user
+only that the software knows less than they do.
+
+Technical detail — a correlation id, a status code — goes in `StateBlock`'s
+`diagnostics` slot, inside a collapsed `<details>`. Available to whoever needs
+it, invisible to everyone who does not.
+
+## Empty states distinguish "nothing yet" from "nothing matching"
+
+They need different actions. `No invoices yet` offers *create*. `No invoices
+match these filters` offers *clear filters*. Offering the wrong one is worse
+than offering none, because it sends the user to a create form when what they
+wanted was the data they already have.
+
+## Loading says what is loading
+
+`Loading invoices`, not `Loading`. It is announced politely to a screen reader
+user who cannot see which region went quiet.
+
+## Never colour alone
+
+A `Badge` requires its label. There is deliberately no `color` prop and no
+icon-only variant: a status whose meaning lives in its hue fails WCAG 1.4.1 for
+anyone who cannot see the difference. The tone reinforces the label; it never
+replaces it.
+
+## Localisation
+
+Every user-visible string is a prop or a slot — none are baked into a
+component. That includes the ones easy to forget: `Button`'s `loadingLabel`,
+`Dialog`'s `closeLabel`, `Pagination`'s page announcements. A hardcoded English
+string inside a component is a string no consumer can translate, and it is the
+most common reason a design system fails a localisation review.

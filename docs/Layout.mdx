@@ -1,0 +1,70 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Layout & container queries" />
+
+# Layout & container queries
+
+The most distinctive decision in this system, and until 4.0 it was documented
+only in `components.json` and the README — so the one thing that made it
+different from every other component library was the one thing Storybook
+never said.
+
+## Components respond to their container, not the viewport
+
+The same `Table` sits in `main` at 1200px, in a `SidePanel` at 432px, and
+inside a `Card` at 280px — on one screen, at one moment. A viewport query gets
+two of those three wrong.
+
+So every responsive rule in this library is a `@container` query. There are no
+`@media` width queries in component CSS at all, and the drift gate fails the
+build on one.
+
+```css
+.bh-table__wrapper {
+  container-type: inline-size;
+}
+
+@container (width < 480px) {
+  .bh-table {
+    /* stops being a grid */
+  }
+}
+```
+
+## The three thresholds
+
+| token | value | what changes below it |
+| --- | --- | --- |
+| `breakpoint.sm` | 480px | a table stops being a grid and stacks |
+| `breakpoint.md` | 900px | a shell hides its rail and its panels |
+| `breakpoint.lg` | 1200px | the widest layout a component plans for |
+
+Container widths, not viewport widths. A component asking "am I narrow?" is
+asking about the box it was handed.
+
+## Why the numbers appear twice
+
+CSS cannot read a custom property inside a container or media query. `@container
+(width < var(--bh-breakpoint-sm))` is invalid and always will be. So each
+threshold exists in two places: `primitive.tokens.json`, and as a literal in
+component CSS.
+
+That duplication is unavoidable. Silent drift between the two copies is not.
+`packages/tokens/src/drift.test.ts` walks every stylesheet the library ships,
+pulls out every width threshold in every query, and asserts each one is a value
+the token layer declares. A component that invents its own 720px turns the
+build red.
+
+This is the pattern the whole token layer is built on: where a value has to be
+duplicated, duplicate it and gate it. Where it does not, use `var()`.
+
+## Which element owns the container
+
+The wrapper, never the component itself. A component cannot query its own
+`container-type` — the query would resolve against its own box, which is the box
+it is trying to size. Each responsive component ships a `__wrapper` part whose
+only job is to be the container.
+
+The consequence worth knowing: dropping a `Table` into a `div` with
+`display: contents` breaks its responsiveness, because there is no box to
+measure. That is a real limitation, and it is in `DS-GAPS.md`.

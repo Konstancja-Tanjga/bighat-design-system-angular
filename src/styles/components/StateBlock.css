@@ -1,0 +1,92 @@
+.bh-stateblock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--bh-gap-snug);
+  color: var(--bh-text-secondary);
+  font-family: var(--bh-font-family);
+}
+
+.bh-stateblock--inline {
+  padding: var(--bh-padding-section) var(--bh-padding-inline);
+}
+.bh-stateblock--section {
+  padding: var(--bh-padding-hero) var(--bh-padding-section);
+}
+.bh-stateblock--page {
+  padding: var(--bh-padding-page) var(--bh-padding-section);
+  min-height: 320px;
+  justify-content: center;
+}
+
+.bh-stateblock__title {
+  margin: 0;
+  color: var(--bh-text-primary);
+  font-size: var(--bh-text-size-heading);
+  font-weight: var(--bh-text-weight-heading);
+  line-height: 1.25;
+}
+
+.bh-stateblock--page .bh-stateblock__title {
+  font-size: var(--bh-text-size-display);
+}
+
+.bh-stateblock__description {
+  margin: 0;
+  max-width: 44ch;
+  color: var(--bh-text-muted);
+  font-size: var(--bh-text-size-caption);
+  line-height: 1.5;
+}
+
+.bh-stateblock__icon {
+  display: inline-flex;
+  color: var(--bh-text-muted);
+  font-size: var(--bh-text-size-display);
+  line-height: 1;
+}
+
+/* The error state tints only the icon, never the body copy. Coloured text as
+   the sole carrier of "this is an error" fails WCAG 1.4.1 — the title says it. */
+.bh-stateblock--error .bh-stateblock__icon {
+  color: var(--bh-status-critical-fg);
+}
+
+.bh-stateblock__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--bh-gap-normal);
+  margin-top: var(--bh-gap-snug);
+}
+
+.bh-stateblock__spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--bh-border-subtle);
+  border-top-color: var(--bh-action-primary-bg);
+  border-radius: 50%;
+  animation: bh-spin var(--bh-duration-spin) var(--bh-easing-loop) infinite;
+}
+
+.bh-stateblock__diagnostics {
+  margin-top: var(--bh-gap-normal);
+  font-size: var(--bh-text-size-body);
+  color: var(--bh-text-muted);
+}
+
+.bh-stateblock__diagnostics summary {
+  cursor: pointer;
+  border-radius: var(--bh-radius-control);
+}
+
+.bh-stateblock__diagnostics-body {
+  margin-top: var(--bh-gap-tight);
+  padding: var(--bh-padding-block) var(--bh-padding-inline);
+  background: var(--bh-surface-sunken);
+  border-radius: var(--bh-radius-control);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  text-align: left;
+  word-break: break-word;
+}

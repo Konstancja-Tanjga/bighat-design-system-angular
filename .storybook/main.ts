@@ -1,4 +1,5 @@
 import type { StorybookConfig } from '@storybook/angular-vite';
+import remarkGfm from 'remark-gfm';
 
 /**
  * `@storybook/angular-vite`: available for Angular >= 21, same authoring
@@ -25,7 +26,15 @@ const config: StorybookConfig = {
     '../src/**/*.stories.ts',
   ],
 
-  addons: ['@storybook/addon-docs', '@storybook/addon-a11y', '@storybook/addon-themes'],
+  addons: [
+    // GFM for the pipe tables in docs/*.mdx; MDX 3 does not parse them on its own.
+    {
+      name: '@storybook/addon-docs',
+      options: { mdxPluginOptions: { mdxCompileOptions: { remarkPlugins: [remarkGfm] } } },
+    },
+    '@storybook/addon-a11y',
+    '@storybook/addon-themes',
+  ],
 
   docs: { defaultName: 'Docs' },
 

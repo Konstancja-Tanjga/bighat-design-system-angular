@@ -25,25 +25,31 @@
   align-items: flex-start;
   gap: var(--bh-gap-snug);
   padding: var(--bh-padding-inline);
-  background: var(--bh-surface-overlay);
-  border: 1px solid var(--bh-border-subtle);
-  border-left: 3px solid var(--bh-border-strong);
-  border-radius: var(--bh-radius-control);
-  box-shadow: var(--bh-elevation-overlay);
+  /* The tone stripe is an inset shadow rather than a border-left since 4.2, so
+     it follows the rounded corner instead of squaring it off. */
+  --bh-toast-tone: var(--bh-border-strong);
+  border: 1px solid transparent;
+  border-radius: var(--bh-radius-surface);
+  background: var(--bh-material-regular-bg);
+  backdrop-filter: blur(var(--bh-material-regular-blur)) saturate(var(--bh-material-saturation));
+  box-shadow:
+    inset 3px 0 0 var(--bh-toast-tone),
+    var(--bh-material-rim),
+    var(--bh-elevation-floating);
   font-family: var(--bh-font-family);
 }
 
 .bh-toast--info {
-  border-left-color: var(--bh-status-info-fg);
+  --bh-toast-tone: var(--bh-status-info-fg);
 }
 .bh-toast--success {
-  border-left-color: var(--bh-status-success-fg);
+  --bh-toast-tone: var(--bh-status-success-fg);
 }
 .bh-toast--warning {
-  border-left-color: var(--bh-status-warning-fg);
+  --bh-toast-tone: var(--bh-status-warning-fg);
 }
 .bh-toast--critical {
-  border-left-color: var(--bh-status-critical-fg);
+  --bh-toast-tone: var(--bh-status-critical-fg);
 }
 
 .bh-toast__content {

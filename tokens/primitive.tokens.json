@@ -673,24 +673,187 @@
           "hex": "#0a3a29"
         }
       }
+    },
+    "inkAlpha": {
+      "6": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.078431,
+            0.094118,
+            0.109804
+          ],
+          "alpha": 0.06,
+          "hex": "#14181c"
+        }
+      },
+      "18": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.078431,
+            0.094118,
+            0.109804
+          ],
+          "alpha": 0.18,
+          "hex": "#14181c"
+        }
+      },
+      "$description": "Added in 4.2. neutral.900 at partial opacity - hairlines, hover fills and the scrim on a light page."
+    },
+    "whiteAlpha": {
+      "8": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1
+          ],
+          "alpha": 0.08,
+          "hex": "#ffffff"
+        }
+      },
+      "$description": "Added in 4.2. White at partial opacity - hairlines and hover fills on a dark page."
+    },
+    "blackAlpha": {
+      "32": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0,
+            0,
+            0
+          ],
+          "alpha": 0.32,
+          "hex": "#000000"
+        }
+      },
+      "$description": "Added in 4.2. The dark-theme scrim."
+    },
+    "glass": {
+      "$description": "Added in 4.2. The fill of a translucent material. Deliberately see-through - the backdrop blur, not the fill, is what makes text on it legible.",
+      "light": {
+        "thin": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1,
+              1,
+              1
+            ],
+            "alpha": 0.38,
+            "hex": "#ffffff"
+          }
+        },
+        "regular": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1,
+              1,
+              1
+            ],
+            "alpha": 0.52,
+            "hex": "#ffffff"
+          }
+        },
+        "thick": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1,
+              1,
+              1
+            ],
+            "alpha": 0.68,
+            "hex": "#ffffff"
+          }
+        },
+        "chrome": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.968627,
+              0.972549,
+              0.976471
+            ],
+            "alpha": 0.58,
+            "hex": "#f7f8f9"
+          }
+        }
+      },
+      "dark": {
+        "thin": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.145098,
+              0.168627,
+              0.196078
+            ],
+            "alpha": 0.4,
+            "hex": "#252b32"
+          }
+        },
+        "regular": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.145098,
+              0.168627,
+              0.196078
+            ],
+            "alpha": 0.52,
+            "hex": "#252b32"
+          }
+        },
+        "thick": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.145098,
+              0.168627,
+              0.196078
+            ],
+            "alpha": 0.66,
+            "hex": "#252b32"
+          }
+        },
+        "chrome": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.078431,
+              0.094118,
+              0.109804
+            ],
+            "alpha": 0.58,
+            "hex": "#14181c"
+          }
+        }
+      }
     }
   },
   "space": {
-    "$description": "4px base. Every gap, padding and margin in the system resolves to a step on this scale.",
     "0": {
       "$type": "dimension",
       "$value": {
         "value": 0,
         "unit": "px"
       }
-    },
-    "0-5": {
-      "$type": "dimension",
-      "$value": {
-        "value": 2,
-        "unit": "px"
-      },
-      "$description": "Two pixels. The only sub-step on the scale, added in 4.0 because seven components already used it - a dot beside a label. Nothing larger may use it."
     },
     "1": {
       "$type": "dimension",
@@ -795,6 +958,15 @@
         "unit": "px"
       },
       "$description": "Full-height empty state."
+    },
+    "$description": "4px base. Every gap, padding and margin in the system resolves to a step on this scale.",
+    "0-5": {
+      "$type": "dimension",
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      },
+      "$description": "Two pixels. The only sub-step on the scale, added in 4.0 because seven components already used it - a dot beside a label. Nothing larger may use it."
     }
   },
   "radius": {
@@ -830,6 +1002,27 @@
       "$type": "dimension",
       "$value": {
         "value": 9999,
+        "unit": "px"
+      }
+    },
+    "xl": {
+      "$type": "dimension",
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "2xl": {
+      "$type": "dimension",
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      }
+    },
+    "3xl": {
+      "$type": "dimension",
+      "$value": {
+        "value": 26,
         "unit": "px"
       }
     }
@@ -903,100 +1096,863 @@
     }
   },
   "shadow": {
-    "sm": {
+    "$description": "Rewritten in 4.2: every shadow is two or three layers - a tight contact shadow and a wide ambient one - instead of one. A single layer reads either as a smudge or as a border, never as height.",
+    "none": {
       "$type": "shadow",
-      "$description": "A surface one step off the page.",
-      "$value": {
-        "color": {
-          "colorSpace": "srgb",
-          "components": [
-            0.078431,
-            0.094118,
-            0.109804
-          ],
-          "alpha": 0.08,
-          "hex": "#14181c"
-        },
-        "offsetX": {
-          "value": 0,
-          "unit": "px"
-        },
-        "offsetY": {
-          "value": 1,
-          "unit": "px"
-        },
-        "blur": {
-          "value": 2,
-          "unit": "px"
-        },
-        "spread": {
-          "value": 0,
-          "unit": "px"
-        }
+      "$description": "No elevation.",
+      "$value": []
+    },
+    "light": {
+      "raised": {
+        "$type": "shadow",
+        "$description": "A surface one step off the page. The 1px ring at 3.5% is what replaced the border.",
+        "$value": [
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0.078431,
+                0.094118,
+                0.109804
+              ],
+              "alpha": 0.035,
+              "hex": "#14181c"
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 0,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 0,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 1,
+              "unit": "px"
+            }
+          },
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0.078431,
+                0.094118,
+                0.109804
+              ],
+              "alpha": 0.05,
+              "hex": "#14181c"
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 1,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 2,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          },
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0.078431,
+                0.094118,
+                0.109804
+              ],
+              "alpha": 0.06,
+              "hex": "#14181c"
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 6,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 20,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          }
+        ]
+      },
+      "floating": {
+        "$type": "shadow",
+        "$description": "A lifted surface - a hovered card, a toast.",
+        "$value": [
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0.078431,
+                0.094118,
+                0.109804
+              ],
+              "alpha": 0.03,
+              "hex": "#14181c"
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 0,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 0,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 1,
+              "unit": "px"
+            }
+          },
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0.078431,
+                0.094118,
+                0.109804
+              ],
+              "alpha": 0.06,
+              "hex": "#14181c"
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 2,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 6,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          },
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0.078431,
+                0.094118,
+                0.109804
+              ],
+              "alpha": 0.1,
+              "hex": "#14181c"
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 12,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 32,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          }
+        ]
+      },
+      "overlay": {
+        "$type": "shadow",
+        "$description": "A surface over the content - menu, popover.",
+        "$value": [
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0.078431,
+                0.094118,
+                0.109804
+              ],
+              "alpha": 0.1,
+              "hex": "#14181c"
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 0,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 0,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0.5,
+              "unit": "px"
+            }
+          },
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0.078431,
+                0.094118,
+                0.109804
+              ],
+              "alpha": 0.06,
+              "hex": "#14181c"
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 4,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 12,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          },
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0.078431,
+                0.094118,
+                0.109804
+              ],
+              "alpha": 0.18,
+              "hex": "#14181c"
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 18,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 48,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          }
+        ]
+      },
+      "modal": {
+        "$type": "shadow",
+        "$description": "The topmost surface.",
+        "$value": [
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0.078431,
+                0.094118,
+                0.109804
+              ],
+              "alpha": 0.1,
+              "hex": "#14181c"
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 0,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 0,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0.5,
+              "unit": "px"
+            }
+          },
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0.078431,
+                0.094118,
+                0.109804
+              ],
+              "alpha": 0.1,
+              "hex": "#14181c"
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 8,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 20,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          },
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0.078431,
+                0.094118,
+                0.109804
+              ],
+              "alpha": 0.28,
+              "hex": "#14181c"
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 32,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 80,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          }
+        ]
       }
     },
-    "md": {
-      "$type": "shadow",
-      "$description": "An overlay the page beneath is still visible through.",
-      "$value": {
-        "color": {
-          "colorSpace": "srgb",
-          "components": [
-            0.078431,
-            0.094118,
-            0.109804
-          ],
-          "alpha": 0.12,
-          "hex": "#14181c"
-        },
-        "offsetX": {
-          "value": 0,
-          "unit": "px"
-        },
-        "offsetY": {
-          "value": 4,
-          "unit": "px"
-        },
-        "blur": {
-          "value": 12,
-          "unit": "px"
-        },
-        "spread": {
-          "value": 0,
-          "unit": "px"
-        }
+    "dark": {
+      "raised": {
+        "$type": "shadow",
+        "$description": "On a dark page a shadow alone is invisible: the top-edge highlight carries the height.",
+        "$value": [
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                1,
+                1,
+                1
+              ],
+              "alpha": 0.06,
+              "hex": "#ffffff"
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 1,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 0,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            },
+            "inset": true
+          },
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0,
+                0,
+                0
+              ],
+              "alpha": 0.4,
+              "hex": "#000000"
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 1,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 2,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          },
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0,
+                0,
+                0
+              ],
+              "alpha": 0.35,
+              "hex": "#000000"
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 6,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 20,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          }
+        ]
+      },
+      "floating": {
+        "$type": "shadow",
+        "$value": [
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                1,
+                1,
+                1
+              ],
+              "alpha": 0.08,
+              "hex": "#ffffff"
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 1,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 0,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            },
+            "inset": true
+          },
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0,
+                0,
+                0
+              ],
+              "alpha": 0.4,
+              "hex": "#000000"
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 2,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 6,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          },
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0,
+                0,
+                0
+              ],
+              "alpha": 0.45,
+              "hex": "#000000"
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 12,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 32,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          }
+        ]
+      },
+      "overlay": {
+        "$type": "shadow",
+        "$description": "Overlays are glass in 4.2; material.rim supplies their highlight.",
+        "$value": [
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0,
+                0,
+                0
+              ],
+              "alpha": 0.6,
+              "hex": "#000000"
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 0,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 0,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0.5,
+              "unit": "px"
+            }
+          },
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0,
+                0,
+                0
+              ],
+              "alpha": 0.3,
+              "hex": "#000000"
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 4,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 12,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          },
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0,
+                0,
+                0
+              ],
+              "alpha": 0.55,
+              "hex": "#000000"
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 18,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 48,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          }
+        ]
+      },
+      "modal": {
+        "$type": "shadow",
+        "$value": [
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0,
+                0,
+                0
+              ],
+              "alpha": 0.6,
+              "hex": "#000000"
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 0,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 0,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0.5,
+              "unit": "px"
+            }
+          },
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0,
+                0,
+                0
+              ],
+              "alpha": 0.35,
+              "hex": "#000000"
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 8,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 20,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          },
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0,
+                0,
+                0
+              ],
+              "alpha": 0.65,
+              "hex": "#000000"
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 32,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 80,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          }
+        ]
       }
     },
-    "lg": {
-      "$type": "shadow",
-      "$description": "A modal: the page beneath is inert.",
-      "$value": {
-        "color": {
-          "colorSpace": "srgb",
-          "components": [
-            0.078431,
-            0.094118,
-            0.109804
-          ],
-          "alpha": 0.18,
-          "hex": "#14181c"
-        },
-        "offsetX": {
-          "value": 0,
-          "unit": "px"
-        },
-        "offsetY": {
-          "value": 12,
-          "unit": "px"
-        },
-        "blur": {
-          "value": 32,
-          "unit": "px"
-        },
-        "spread": {
-          "value": 0,
-          "unit": "px"
-        }
+    "rim": {
+      "light": {
+        "$type": "shadow",
+        "$description": "The lit edge of a piece of glass.",
+        "$value": [
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                1,
+                1,
+                1
+              ],
+              "alpha": 0.85,
+              "hex": "#ffffff"
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 1,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 0,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            },
+            "inset": true
+          },
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                1,
+                1,
+                1
+              ],
+              "alpha": 0.45,
+              "hex": "#ffffff"
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 0,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 0,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 1,
+              "unit": "px"
+            },
+            "inset": true
+          }
+        ]
+      },
+      "dark": {
+        "$type": "shadow",
+        "$value": [
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                1,
+                1,
+                1
+              ],
+              "alpha": 0.14,
+              "hex": "#ffffff"
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 1,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 0,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            },
+            "inset": true
+          },
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                1,
+                1,
+                1
+              ],
+              "alpha": 0.07,
+              "hex": "#ffffff"
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 0,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 0,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 1,
+              "unit": "px"
+            },
+            "inset": true
+          }
+        ]
       }
     }
   },
@@ -1135,6 +2091,44 @@
     "toast": {
       "$type": "number",
       "$value": 1000
+    }
+  },
+  "blur": {
+    "$description": "Added in 4.2. Backdrop blur radii for the material and scrim roles.",
+    "sm": {
+      "$type": "dimension",
+      "$value": {
+        "value": 6,
+        "unit": "px"
+      }
+    },
+    "md": {
+      "$type": "dimension",
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "lg": {
+      "$type": "dimension",
+      "$value": {
+        "value": 28,
+        "unit": "px"
+      }
+    },
+    "xl": {
+      "$type": "dimension",
+      "$value": {
+        "value": 40,
+        "unit": "px"
+      }
+    }
+  },
+  "saturation": {
+    "$description": "Added in 4.2. The backdrop saturation boost that keeps colour behind glass from going grey.",
+    "vivid": {
+      "$type": "number",
+      "$value": 1.9
     }
   }
 }

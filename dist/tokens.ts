@@ -16,6 +16,7 @@ export type TokenPath =
   | 'border.subtle'
   | 'border.strong'
   | 'border.focus'
+  | 'border.hairline'
   | 'action.primary.bg'
   | 'action.primary.bgHover'
   | 'action.primary.bgActive'
@@ -74,7 +75,11 @@ export type TokenPath =
   | 'radius.surface'
   | 'radius.pill'
   | 'radius.indicator'
+  | 'radius.overlay'
+  | 'radius.modal'
+  | 'elevation.flat'
   | 'elevation.raised'
+  | 'elevation.floating'
   | 'elevation.overlay'
   | 'elevation.modal'
   | 'duration.instant'
@@ -92,7 +97,20 @@ export type TokenPath =
   | 'layer.sticky'
   | 'layer.rail'
   | 'layer.overlay'
-  | 'layer.toast';
+  | 'layer.toast'
+  | 'fill.hover'
+  | 'material.thin.bg'
+  | 'material.thin.blur'
+  | 'material.regular.bg'
+  | 'material.regular.blur'
+  | 'material.thick.bg'
+  | 'material.thick.blur'
+  | 'material.chrome.bg'
+  | 'material.chrome.blur'
+  | 'material.saturation'
+  | 'material.rim'
+  | 'scrim.bg'
+  | 'scrim.blur';
 
 /**
  * Reference a semantic token from component CSS-in-JS or a style attribute.
@@ -121,6 +139,7 @@ export const tokens = {
   'border.subtle': { light: '#dfe3e7', dark: '#39414a' },
   'border.strong': { light: '#6b7683', dark: '#6b7683' },
   'border.focus': { light: '#3563e9', dark: '#5b87fb' },
+  'border.hairline': { light: 'rgba(20, 24, 28, 0.06)', dark: 'rgba(255, 255, 255, 0.08)' },
   'action.primary.bg': { light: '#3563e9', dark: '#5b87fb' },
   'action.primary.bgHover': { light: '#2148c9', dark: '#8fb0ff' },
   'action.primary.bgActive': { light: '#1a39a1', dark: '#bcd0ff' },
@@ -176,12 +195,16 @@ export const tokens = {
   'padding.gutter': { light: '32px', dark: '32px' },
   'padding.hero': { light: '48px', dark: '48px' },
   'radius.control': { light: '6px', dark: '6px' },
-  'radius.surface': { light: '10px', dark: '10px' },
+  'radius.surface': { light: '20px', dark: '20px' },
   'radius.pill': { light: '9999px', dark: '9999px' },
   'radius.indicator': { light: '3px', dark: '3px' },
-  'elevation.raised': { light: '0 1px 2px rgba(20, 24, 28, 0.08)', dark: '0 1px 2px rgba(20, 24, 28, 0.08)' },
-  'elevation.overlay': { light: '0 4px 12px rgba(20, 24, 28, 0.12)', dark: '0 4px 12px rgba(20, 24, 28, 0.12)' },
-  'elevation.modal': { light: '0 12px 32px rgba(20, 24, 28, 0.18)', dark: '0 12px 32px rgba(20, 24, 28, 0.18)' },
+  'radius.overlay': { light: '16px', dark: '16px' },
+  'radius.modal': { light: '26px', dark: '26px' },
+  'elevation.flat': { light: 'none', dark: 'none' },
+  'elevation.raised': { light: '0 0 0 1px rgba(20, 24, 28, 0.035), 0 1px 2px rgba(20, 24, 28, 0.05), 0 6px 20px rgba(20, 24, 28, 0.06)', dark: 'inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 1px 2px rgba(0, 0, 0, 0.4), 0 6px 20px rgba(0, 0, 0, 0.35)' },
+  'elevation.floating': { light: '0 0 0 1px rgba(20, 24, 28, 0.03), 0 2px 6px rgba(20, 24, 28, 0.06), 0 12px 32px rgba(20, 24, 28, 0.1)', dark: 'inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 2px 6px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45)' },
+  'elevation.overlay': { light: '0 0 0 0.5px rgba(20, 24, 28, 0.1), 0 4px 12px rgba(20, 24, 28, 0.06), 0 18px 48px rgba(20, 24, 28, 0.18)', dark: '0 0 0 0.5px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.3), 0 18px 48px rgba(0, 0, 0, 0.55)' },
+  'elevation.modal': { light: '0 0 0 0.5px rgba(20, 24, 28, 0.1), 0 8px 20px rgba(20, 24, 28, 0.1), 0 32px 80px rgba(20, 24, 28, 0.28)', dark: '0 0 0 0.5px rgba(0, 0, 0, 0.6), 0 8px 20px rgba(0, 0, 0, 0.35), 0 32px 80px rgba(0, 0, 0, 0.65)' },
   'duration.instant': { light: '80ms', dark: '80ms' },
   'duration.fast': { light: '140ms', dark: '140ms' },
   'duration.normal': { light: '220ms', dark: '220ms' },
@@ -198,6 +221,19 @@ export const tokens = {
   'layer.rail': { light: '40', dark: '40' },
   'layer.overlay': { light: '100', dark: '100' },
   'layer.toast': { light: '1000', dark: '1000' },
+  'fill.hover': { light: 'rgba(20, 24, 28, 0.06)', dark: 'rgba(255, 255, 255, 0.08)' },
+  'material.thin.bg': { light: 'rgba(255, 255, 255, 0.38)', dark: 'rgba(37, 43, 50, 0.4)' },
+  'material.thin.blur': { light: '16px', dark: '16px' },
+  'material.regular.bg': { light: 'rgba(255, 255, 255, 0.52)', dark: 'rgba(37, 43, 50, 0.52)' },
+  'material.regular.blur': { light: '28px', dark: '28px' },
+  'material.thick.bg': { light: 'rgba(255, 255, 255, 0.68)', dark: 'rgba(37, 43, 50, 0.66)' },
+  'material.thick.blur': { light: '40px', dark: '40px' },
+  'material.chrome.bg': { light: 'rgba(247, 248, 249, 0.58)', dark: 'rgba(20, 24, 28, 0.58)' },
+  'material.chrome.blur': { light: '28px', dark: '28px' },
+  'material.saturation': { light: '1.9', dark: '1.9' },
+  'material.rim': { light: 'inset 0 1px 0 rgba(255, 255, 255, 0.85), inset 0 0 0 1px rgba(255, 255, 255, 0.45)', dark: 'inset 0 1px 0 rgba(255, 255, 255, 0.14), inset 0 0 0 1px rgba(255, 255, 255, 0.07)' },
+  'scrim.bg': { light: 'rgba(20, 24, 28, 0.18)', dark: 'rgba(0, 0, 0, 0.32)' },
+  'scrim.blur': { light: '6px', dark: '6px' },
 } as const satisfies Record<TokenPath, { light: string; dark: string }>;
 
 export const contrast = {

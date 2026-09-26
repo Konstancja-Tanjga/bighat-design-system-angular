@@ -89,8 +89,17 @@ function toCss(token, path) {
     case 'fontFamily':
       return token.$value.map((f) => (/\s/.test(f) ? `'${f}'` : f)).join(', ');
     case 'shadow': {
-      const s = token.$value;
-      return `${dim(s.offsetX)} ${dim(s.offsetY)} ${dim(s.blur)} ${rgba(s.color)}`;
+      // DTCG allows one shadow or a list; 4.2's elevations are lists, and an
+      // empty list is how `elevation.flat` says "no shadow".
+      const layers = [token.$value].flat();
+      if (!layers.length) return 'none';
+      return layers
+        .map((s) => {
+          const spread = s.spread?.value ? ` ${dim(s.spread)}` : '';
+          const inset = s.inset ? 'inset ' : '';
+          return `${inset}${dim(s.offsetX)} ${dim(s.offsetY)} ${dim(s.blur)}${spread} ${rgba(s.color)}`;
+        })
+        .join(', ');
     }
     default:
       throw new Error(`${path.join('.')} has unsupported $type "${token.$type}"`);

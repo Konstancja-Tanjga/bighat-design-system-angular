@@ -1,10 +1,13 @@
 .bh-dialog {
   padding: 0;
-  border: 1px solid var(--bh-border-subtle);
-  border-radius: var(--bh-radius-surface);
-  background: var(--bh-surface-overlay);
+  border-radius: var(--bh-radius-modal);
+  /* Transparent, not none: forced-colours mode drops box-shadow and paints
+     this border, so the surface keeps an edge there. */
+  border: 1px solid transparent;
+  background: var(--bh-material-thick-bg);
+  backdrop-filter: blur(var(--bh-material-thick-blur)) saturate(var(--bh-material-saturation));
+  box-shadow: var(--bh-material-rim), var(--bh-elevation-modal);
   color: var(--bh-text-primary);
-  box-shadow: var(--bh-elevation-modal);
   font-family: var(--bh-font-family);
   width: min(100% - 32px, var(--bh-dialog-width, 480px));
   max-height: calc(100dvh - 64px);
@@ -21,8 +24,11 @@
   --bh-dialog-width: 720px;
 }
 
+/* Lighter than the 55% it replaced: the blur now does the separating, so the
+   page behind can stay recognisable - the reader knows where they will return. */
 .bh-dialog::backdrop {
-  background: rgb(20 24 28 / 55%);
+  background: var(--bh-scrim-bg);
+  backdrop-filter: blur(var(--bh-scrim-blur));
 }
 
 .bh-dialog__panel {

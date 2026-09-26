@@ -22,26 +22,33 @@ import { BhToastService } from './toast.service';
   selector: 'bh-toast-host',
   encapsulation: ViewEncapsulation.None,
   template: `
-    <div class="bh-toast-host">
-      <div class="bh-toast-host__region" role="status" aria-live="polite">
+    <!--
+      Same DOM as React's ToastProvider: a fixed viewport holding two ordered
+      lists, each a live region from first paint. aria-live is static on each
+      list and no role is bound, so politeness never changes on a live node.
+    -->
+    <div class="bh-toast-viewport">
+      <ol class="bh-toast-region" aria-live="polite" aria-relevant="additions" data-tone="polite">
         @for (toast of polite(); track toast.id) {
           <ng-container [ngTemplateOutlet]="item" [ngTemplateOutletContext]="{ $implicit: toast }" />
         }
-      </div>
+      </ol>
 
-      <div class="bh-toast-host__region" role="alert" aria-live="assertive">
+      <ol class="bh-toast-region" aria-live="assertive" aria-relevant="additions" data-tone="assertive">
         @for (toast of assertive(); track toast.id) {
           <ng-container [ngTemplateOutlet]="item" [ngTemplateOutletContext]="{ $implicit: toast }" />
         }
-      </div>
+      </ol>
     </div>
 
     <ng-template #item let-toast>
-      <div [class]="'bh-toast bh-toast--' + toast.tone" [attr.data-tone]="toast.tone">
-        <p class="bh-toast__title">{{ toast.title }}</p>
-        @if (toast.description) {
-          <p class="bh-toast__description">{{ toast.description }}</p>
-        }
+      <li [class]="'bh-toast bh-toast--' + toast.tone" [attr.data-tone]="toast.tone">
+        <div class="bh-toast__content">
+          <p class="bh-toast__title">{{ toast.title }}</p>
+          @if (toast.description) {
+            <p class="bh-toast__description">{{ toast.description }}</p>
+          }
+        </div>
         <div class="bh-toast__actions">
           @if (toast.action) {
             <button bhButton variant="ghost" size="sm" type="button" (click)="run(toast)">
@@ -65,7 +72,7 @@ import { BhToastService } from './toast.service';
             ✕
           </button>
         </div>
-      </div>
+      </li>
     </ng-template>
   `,
 })

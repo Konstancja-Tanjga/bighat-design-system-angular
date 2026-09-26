@@ -34,31 +34,44 @@ import type { DialogSize } from '../vocabulary';
   selector: 'bh-dialog',
   encapsulation: ViewEncapsulation.None,
   template: `
-    <dialog #dialog [class]="'bh-dialog bh-dialog--' + size()" (cancel)="onCancel($event)" (close)="open.set(false)">
-      <header class="bh-dialog__header">
-        <h2 class="bh-dialog__title" [id]="titleId">{{ title() }}</h2>
-        @if (dismissible()) {
-          <button
-            bhButton
-            variant="ghost"
-            size="sm"
-            class="bh-dialog__close"
-            type="button"
-            [attr.aria-label]="closeLabel()"
-            (click)="close()"
-          >
-            ✕
-          </button>
-        }
-      </header>
+    <dialog
+      #dialog
+      [class]="'bh-dialog bh-dialog--' + size()"
+      [attr.aria-labelledby]="titleId"
+      (cancel)="onCancel($event)"
+      (close)="open.set(false)"
+    >
+      <!--
+        The panel carries the padding and the column layout, as in React: the
+        dialog element itself is only the glass and its corner, so nothing
+        inside can run into the 26px radius.
+      -->
+      <div class="bh-dialog__panel">
+        <header class="bh-dialog__header">
+          <h2 class="bh-dialog__title" [id]="titleId">{{ title() }}</h2>
+          @if (dismissible()) {
+            <button
+              bhButton
+              variant="ghost"
+              size="sm"
+              class="bh-dialog__close"
+              type="button"
+              [attr.aria-label]="closeLabel()"
+              (click)="close()"
+            >
+              ✕
+            </button>
+          }
+        </header>
 
-      <div class="bh-dialog__body">
-        <ng-content />
+        <div class="bh-dialog__body">
+          <ng-content />
+        </div>
+
+        <footer class="bh-dialog__footer">
+          <ng-content select="[bhFooter]" />
+        </footer>
       </div>
-
-      <footer class="bh-dialog__footer">
-        <ng-content select="[bhFooter]" />
-      </footer>
     </dialog>
   `,
 })

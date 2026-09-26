@@ -58,8 +58,8 @@
 .bh-button--primary.bh-button--critical:hover:not([aria-disabled='true']):not(:disabled) {
   background: var(--bh-action-critical-bg-hover);
 }
-/* Matches the specificity of .bh-button--primary:active, which otherwise wins
-   and turned a pressed critical button green. */
+/* Outranks .bh-button--primary:active, which otherwise won and turned a
+   pressed critical button green. */
 .bh-button--primary.bh-button--critical:active:not([aria-disabled='true']):not(:disabled) {
   background: var(--bh-action-critical-bg-hover);
 }
@@ -71,13 +71,29 @@
   backdrop-filter: blur(var(--bh-material-regular-blur)) saturate(var(--bh-material-saturation));
   color: var(--bh-action-secondary-fg);
   box-shadow: var(--bh-material-rim), var(--bh-elevation-control);
+  position: relative;
+  isolation: isolate;
+}
+/* Hover tints the glass through an overlay rather than a new background: a
+   thicker material is invisible on a white page, and an overlay's opacity can
+   fade where a background-image cannot. The shadow keeps the rest state's
+   layers and adds floating after them, so the list interpolates too. */
+.bh-button--secondary::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--bh-fill-hover);
+  opacity: 0;
+  transition: opacity var(--bh-duration-fast) var(--bh-easing-standard);
+  pointer-events: none;
 }
 .bh-button--secondary:hover:not([aria-disabled='true']):not(:disabled) {
-  /* On a white page a thicker material is invisible, so hover tints the glass
-     and lifts it a step: the change reads on any backdrop. */
-  background:
-    linear-gradient(var(--bh-fill-hover), var(--bh-fill-hover)), var(--bh-material-regular-bg);
-  box-shadow: var(--bh-material-rim), var(--bh-elevation-floating);
+  box-shadow: var(--bh-material-rim), var(--bh-elevation-control), var(--bh-elevation-floating);
+}
+.bh-button--secondary:hover:not([aria-disabled='true']):not(:disabled)::before {
+  opacity: 1;
 }
 .bh-button--secondary.bh-button--critical {
   color: var(--bh-status-critical-fg);

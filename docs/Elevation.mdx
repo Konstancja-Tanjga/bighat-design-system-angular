@@ -1,0 +1,190 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Elevation & materials" />
+
+export const tile = {
+  display: 'grid',
+  placeItems: 'center',
+  minHeight: 96,
+  borderRadius: 'var(--bh-radius-surface)',
+  fontFamily: 'var(--bh-font-family)',
+  fontSize: 13,
+  color: 'var(--bh-text-primary)',
+};
+
+export const ElevationScale = () => (
+  <div
+    style={{
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
+      gap: 24,
+      padding: 32,
+      background: 'var(--bh-surface-base)',
+      borderRadius: 'var(--bh-radius-surface)',
+    }}
+  >
+    {['flat', 'raised', 'floating', 'overlay', 'modal'].map((step) => (
+      <div
+        key={step}
+        style={{
+          ...tile,
+          background: 'var(--bh-surface-raised)',
+          boxShadow: `var(--bh-elevation-${step})`,
+        }}
+      >
+        {step}
+      </div>
+    ))}
+  </div>
+);
+
+export const MaterialScale = () => (
+  <div
+    style={{
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
+      gap: 24,
+      padding: 32,
+      borderRadius: 'var(--bh-radius-surface)',
+      background:
+        'repeating-linear-gradient(135deg, var(--bh-status-info-fg) 0 18px, var(--bh-status-success-fg) 18px 36px, var(--bh-status-warning-fg) 36px 54px, var(--bh-status-critical-fg) 54px 72px)',
+    }}
+  >
+    {['thin', 'regular', 'thick', 'chrome'].map((step) => (
+      <div
+        key={step}
+        style={{
+          ...tile,
+          background: `var(--bh-material-${step}-bg)`,
+          backdropFilter: `blur(var(--bh-material-${step}-blur)) saturate(var(--bh-material-saturation))`,
+          WebkitBackdropFilter: `blur(var(--bh-material-${step}-blur)) saturate(var(--bh-material-saturation))`,
+          boxShadow: 'var(--bh-material-rim), var(--bh-elevation-overlay)',
+          border: '1px solid transparent',
+        }}
+      >
+        {step}
+      </div>
+    ))}
+  </div>
+);
+
+# Elevation & materials
+
+New in 4.2. Until 4.1 almost every surface was drawn by a 1px border, and
+elevation was three single-layer shadows (8, 12 and 18% opacity) that read as a
+smudge next to the border. The result read as flat: a card, a menu and a dialog
+were the same white rectangle with the same grey line around it, and the only
+thing telling them apart was where they sat.
+
+4.2 draws surfaces with **height** instead of lines. The tokens are the same
+ones the React library ships; the specimens below are plain CSS on the
+published custom properties, so they show exactly what a consumer gets.
+
+## The scale
+
+Five steps. Every step above `flat` is three layered shadows - an edge, a tight
+contact shadow and a wide ambient one - because a single layer reads either as a
+smudge or as a border, never as height.
+
+<ElevationScale />
+
+`elevation.raised` is the default for any surface. In the light theme its first
+layer is a 1px ring at 3.5% opacity: that ring is what replaced the border. It is there so a white
+card on a white page still has an edge, and faint enough that it reads as the
+card's shape rather than as a line.
+
+In the dark theme a shadow on a near-black page is invisible, so height is
+carried by light: `raised` and `floating` add a 1px highlight along the top
+edge. Switch the theme in the toolbar to see it.
+
+| token | light | dark |
+| --- | --- | --- |
+| `elevation.flat` | `none` | same |
+| `elevation.raised` | `0 0 0 1px rgba(20, 24, 28, 0.035), 0 1px 2px rgba(20, 24, 28, 0.05), 0 6px 20px rgba(20, 24, 28, 0.06)` | `inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 1px 2px rgba(0, 0, 0, 0.4), 0 6px 20px rgba(0, 0, 0, 0.35)` |
+| `elevation.floating` | `0 0 0 1px rgba(20, 24, 28, 0.03), 0 2px 6px rgba(20, 24, 28, 0.06), 0 12px 32px rgba(20, 24, 28, 0.1)` | `inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 2px 6px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45)` |
+| `elevation.overlay` | `0 0 0 0.5px rgba(20, 24, 28, 0.1), 0 4px 12px rgba(20, 24, 28, 0.06), 0 18px 48px rgba(20, 24, 28, 0.18)` | `0 0 0 0.5px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.3), 0 18px 48px rgba(0, 0, 0, 0.55)` |
+| `elevation.modal` | `0 0 0 0.5px rgba(20, 24, 28, 0.1), 0 8px 20px rgba(20, 24, 28, 0.1), 0 32px 80px rgba(20, 24, 28, 0.28)` | `0 0 0 0.5px rgba(0, 0, 0, 0.6), 0 8px 20px rgba(0, 0, 0, 0.35), 0 32px 80px rgba(0, 0, 0, 0.65)` |
+
+## Materials
+
+Anything that floats **over** content is glass: a translucent fill, a backdrop
+blur, and a saturation boost that keeps the colour behind it from going grey.
+
+<MaterialScale />
+
+A material is three declarations and a shadow:
+
+```css
+.my-popover {
+  background: var(--bh-material-regular-bg);
+  backdrop-filter: blur(var(--bh-material-regular-blur)) saturate(var(--bh-material-saturation));
+  box-shadow: var(--bh-material-rim), var(--bh-elevation-overlay);
+  border: 1px solid transparent;
+}
+```
+
+`material.rim` is the lit inner edge of the glass and goes before the elevation
+in the shadow list. It replaces the border on every glass surface. The border
+stays, transparent rather than removed: forced-colours mode drops `box-shadow`
+and paints that border, so the surface keeps an edge there.
+
+- `thin` - a control laid over an image
+- `regular` - Toast (and Menu, Combobox in the React library)
+- `thick` - Dialog - the most text, so the most opaque
+- `chrome` - app bars and sticky headers; it shows through only where content scrolls beneath
+
+**Only over content.** On an empty page glass has nothing to blur, and a
+translucent white over white is just a slightly grey rectangle. Surfaces in a
+grid stay solid `surface.raised` with `elevation.raised`.
+
+| token | light | dark |
+| --- | --- | --- |
+| `material.thin.bg` | `rgba(255, 255, 255, 0.38)` | `rgba(37, 43, 50, 0.4)` |
+| `material.thin.blur` | `16px` | same |
+| `material.regular.bg` | `rgba(255, 255, 255, 0.52)` | `rgba(37, 43, 50, 0.52)` |
+| `material.regular.blur` | `28px` | same |
+| `material.thick.bg` | `rgba(255, 255, 255, 0.68)` | `rgba(37, 43, 50, 0.66)` |
+| `material.thick.blur` | `40px` | same |
+| `material.chrome.bg` | `rgba(247, 248, 249, 0.58)` | `rgba(20, 24, 28, 0.58)` |
+| `material.chrome.blur` | `28px` | same |
+| `material.saturation` | `1.9` | same |
+| `material.rim` | `inset 0 1px 0 rgba(255, 255, 255, 0.85), inset 0 0 0 1px rgba(255, 255, 255, 0.45)` | `inset 0 1px 0 rgba(255, 255, 255, 0.14), inset 0 0 0 1px rgba(255, 255, 255, 0.07)` |
+
+## Supporting roles
+
+- `border.hairline` - the edge of something with no border: a row divider inside
+  a surface, the line under an app bar. Fainter than `border.subtle`, and like it,
+  decorative only.
+- `fill.hover` - a hovered row on glass. `surface.sunken` is opaque and punches a
+  solid hole in the material.
+- `scrim.*` - behind a Dialog. 18% (32% in dark) instead of the old 55%, because the blur now
+  does the separating and the page underneath can stay recognisable.
+
+| token | light | dark |
+| --- | --- | --- |
+| `border.hairline` | `rgba(20, 24, 28, 0.06)` | `rgba(255, 255, 255, 0.08)` |
+| `fill.hover` | `rgba(20, 24, 28, 0.06)` | `rgba(255, 255, 255, 0.08)` |
+| `scrim.bg` | `rgba(20, 24, 28, 0.18)` | `rgba(0, 0, 0, 0.32)` |
+| `scrim.blur` | `6px` | same |
+
+## Radius
+
+With no border to draw it, the corner is what gives a surface its shape, so
+`radius.surface` grew from 10px to 20px and two larger steps were added for
+things that float.
+
+| token | value | used by |
+| --- | --- | --- |
+| `radius.surface` | `20px` | Toast, and every component on `radius.surface` |
+| `radius.overlay` | `16px` | menus and listboxes (React library) |
+| `radius.modal` | `26px` | Dialog |
+
+## What changed in the components
+
+This library implements eight components; the two that float changed.
+
+- **Dialog** - border, 55% scrim → `material.thick`, `radius.modal`, blurred 18% scrim (32% in dark)
+- **Toast** - 6px corners, border, square tone stripe → `material.regular`, 20px corners, `floating`, tone stripe follows the corner
+
+Card, Menu, Combobox and AppBar changed too, in the React library only - they
+are not implemented here.

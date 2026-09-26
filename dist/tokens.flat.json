@@ -74,6 +74,12 @@
       "light": "#3563e9",
       "dark": "#5b87fb"
     },
+    "border.hairline": {
+      "type": "color",
+      "light": "rgba(20, 24, 28, 0.06)",
+      "dark": "rgba(255, 255, 255, 0.08)",
+      "description": "Added in 4.2. The edge of a container that has no border - a row divider inside a card, a line under glass chrome. Decorative only, like border.subtle, and fainter by design."
+    },
     "action.primary.bg": {
       "type": "color",
       "light": "#3563e9",
@@ -361,8 +367,9 @@
     },
     "radius.surface": {
       "type": "dimension",
-      "light": "10px",
-      "dark": "10px"
+      "light": "20px",
+      "dark": "20px",
+      "description": "Rounder in 4.2 (10px → 20px): with no border to draw it, the corner is what gives a surface its shape."
     },
     "radius.pill": {
       "type": "dimension",
@@ -375,23 +382,47 @@
       "dark": "3px",
       "description": "Added in 4.0. The corner of a small drawn control - a checkbox box, a radio dot's ring. Was a 4px literal, which was never on the radius scale at all; radius.control (6px) reads as too round on a 16px box, and the 1px difference from 3px is not a design decision worth a new primitive."
     },
+    "radius.overlay": {
+      "type": "dimension",
+      "light": "16px",
+      "dark": "16px",
+      "description": "Added in 4.2. Menu, popover and listbox - smaller than a surface because they are smaller."
+    },
+    "radius.modal": {
+      "type": "dimension",
+      "light": "26px",
+      "dark": "26px",
+      "description": "Added in 4.2. Dialog and sheet."
+    },
+    "elevation.flat": {
+      "type": "shadow",
+      "light": "none",
+      "dark": "none",
+      "description": "Added in 4.2. On the page."
+    },
     "elevation.raised": {
       "type": "shadow",
-      "light": "0 1px 2px rgba(20, 24, 28, 0.08)",
-      "dark": "0 1px 2px rgba(20, 24, 28, 0.08)",
-      "description": "A surface one step off the page."
+      "light": "0 0 0 1px rgba(20, 24, 28, 0.035), 0 1px 2px rgba(20, 24, 28, 0.05), 0 6px 20px rgba(20, 24, 28, 0.06)",
+      "dark": "inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 1px 2px rgba(0, 0, 0, 0.4), 0 6px 20px rgba(0, 0, 0, 0.35)",
+      "description": "Card, list container. The default for any surface since 4.2 - it replaces the border."
+    },
+    "elevation.floating": {
+      "type": "shadow",
+      "light": "0 0 0 1px rgba(20, 24, 28, 0.03), 0 2px 6px rgba(20, 24, 28, 0.06), 0 12px 32px rgba(20, 24, 28, 0.1)",
+      "dark": "inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 2px 6px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45)",
+      "description": "Added in 4.2. A hovered card, a toast."
     },
     "elevation.overlay": {
       "type": "shadow",
-      "light": "0 4px 12px rgba(20, 24, 28, 0.12)",
-      "dark": "0 4px 12px rgba(20, 24, 28, 0.12)",
-      "description": "An overlay the page beneath is still visible through."
+      "light": "0 0 0 0.5px rgba(20, 24, 28, 0.1), 0 4px 12px rgba(20, 24, 28, 0.06), 0 18px 48px rgba(20, 24, 28, 0.18)",
+      "dark": "0 0 0 0.5px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.3), 0 18px 48px rgba(0, 0, 0, 0.55)",
+      "description": "Menu, popover, listbox."
     },
     "elevation.modal": {
       "type": "shadow",
-      "light": "0 12px 32px rgba(20, 24, 28, 0.18)",
-      "dark": "0 12px 32px rgba(20, 24, 28, 0.18)",
-      "description": "A modal: the page beneath is inert."
+      "light": "0 0 0 0.5px rgba(20, 24, 28, 0.1), 0 8px 20px rgba(20, 24, 28, 0.1), 0 32px 80px rgba(20, 24, 28, 0.28)",
+      "dark": "0 0 0 0.5px rgba(0, 0, 0, 0.6), 0 8px 20px rgba(0, 0, 0, 0.35), 0 32px 80px rgba(0, 0, 0, 0.65)",
+      "description": "Dialog, side panel."
     },
     "duration.instant": {
       "type": "duration",
@@ -475,6 +506,77 @@
       "type": "number",
       "light": "1000",
       "dark": "1000"
+    },
+    "fill.hover": {
+      "type": "color",
+      "light": "rgba(20, 24, 28, 0.06)",
+      "dark": "rgba(255, 255, 255, 0.08)",
+      "description": "A hovered or active row on a translucent surface. surface.sunken is opaque, and on glass it punches a solid hole in the material."
+    },
+    "material.thin.bg": {
+      "type": "color",
+      "light": "rgba(255, 255, 255, 0.38)",
+      "dark": "rgba(37, 43, 50, 0.4)"
+    },
+    "material.thin.blur": {
+      "type": "dimension",
+      "light": "16px",
+      "dark": "16px",
+      "description": "A control laid over an image."
+    },
+    "material.regular.bg": {
+      "type": "color",
+      "light": "rgba(255, 255, 255, 0.52)",
+      "dark": "rgba(37, 43, 50, 0.52)"
+    },
+    "material.regular.blur": {
+      "type": "dimension",
+      "light": "28px",
+      "dark": "28px",
+      "description": "Menu, popover, toast."
+    },
+    "material.thick.bg": {
+      "type": "color",
+      "light": "rgba(255, 255, 255, 0.68)",
+      "dark": "rgba(37, 43, 50, 0.66)"
+    },
+    "material.thick.blur": {
+      "type": "dimension",
+      "light": "40px",
+      "dark": "40px",
+      "description": "Dialog - the most text, so the most opaque."
+    },
+    "material.chrome.bg": {
+      "type": "color",
+      "light": "rgba(247, 248, 249, 0.58)",
+      "dark": "rgba(20, 24, 28, 0.58)"
+    },
+    "material.chrome.blur": {
+      "type": "dimension",
+      "light": "28px",
+      "dark": "28px",
+      "description": "App bar and sticky headers. Shows through only where content scrolls beneath."
+    },
+    "material.saturation": {
+      "type": "number",
+      "light": "1.9",
+      "dark": "1.9"
+    },
+    "material.rim": {
+      "type": "shadow",
+      "light": "inset 0 1px 0 rgba(255, 255, 255, 0.85), inset 0 0 0 1px rgba(255, 255, 255, 0.45)",
+      "dark": "inset 0 1px 0 rgba(255, 255, 255, 0.14), inset 0 0 0 1px rgba(255, 255, 255, 0.07)",
+      "description": "The lit inner edge of glass. Goes first in the box-shadow list, before the elevation."
+    },
+    "scrim.bg": {
+      "type": "color",
+      "light": "rgba(20, 24, 28, 0.18)",
+      "dark": "rgba(0, 0, 0, 0.32)"
+    },
+    "scrim.blur": {
+      "type": "dimension",
+      "light": "6px",
+      "dark": "6px"
     }
   }
 }

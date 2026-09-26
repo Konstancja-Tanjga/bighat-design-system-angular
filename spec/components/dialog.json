@@ -116,16 +116,20 @@
     ]
   },
   "tokensUsed": [
-    "surface.overlay",
     "text.primary",
-    "border.subtle",
     "elevation.modal",
-    "radius.surface",
     "padding.section",
     "gap.normal",
     "layer.overlay",
     "duration.normal",
-    "easing.enter"
+    "easing.enter",
+    "radius.modal",
+    "material.thick.bg",
+    "material.thick.blur",
+    "material.saturation",
+    "material.rim",
+    "scrim.bg",
+    "scrim.blur"
   ],
   "content": {
     "title": "A question or a noun phrase, sentence case, no trailing period. 'Delete this workspace?'",

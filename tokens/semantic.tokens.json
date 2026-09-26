@@ -48,6 +48,10 @@
     },
     "focus": {
       "$value": "{color.blue.500}"
+    },
+    "hairline": {
+      "$value": "{color.inkAlpha.6}",
+      "$description": "Added in 4.2. The edge of a container that has no border - a row divider inside a card, a line under glass chrome. Decorative only, like border.subtle, and fainter by design."
     }
   },
   "action": {
@@ -269,7 +273,8 @@
       "$value": "{radius.md}"
     },
     "surface": {
-      "$value": "{radius.lg}"
+      "$value": "{radius.2xl}",
+      "$description": "Rounder in 4.2 (10px \u2192 20px): with no border to draw it, the corner is what gives a surface its shape."
     },
     "pill": {
       "$value": "{radius.full}"
@@ -277,17 +282,37 @@
     "indicator": {
       "$value": "{radius.sm}",
       "$description": "Added in 4.0. The corner of a small drawn control - a checkbox box, a radio dot's ring. Was a 4px literal, which was never on the radius scale at all; radius.control (6px) reads as too round on a 16px box, and the 1px difference from 3px is not a design decision worth a new primitive."
+    },
+    "overlay": {
+      "$value": "{radius.xl}",
+      "$description": "Added in 4.2. Menu, popover and listbox - smaller than a surface because they are smaller."
+    },
+    "modal": {
+      "$value": "{radius.3xl}",
+      "$description": "Added in 4.2. Dialog and sheet."
     }
   },
   "elevation": {
+    "$description": "Rewritten in 4.2. Five steps; every step above flat is three layered shadows; in the dark theme raised and floating add a top-edge highlight, and overlay and modal rely on material.rim for theirs. Pair a glass surface with material.rim: `box-shadow: var(--bh-material-rim), var(--bh-elevation-overlay)`.",
+    "flat": {
+      "$value": "{shadow.none}",
+      "$description": "Added in 4.2. On the page."
+    },
     "raised": {
-      "$value": "{shadow.sm}"
+      "$value": "{shadow.light.raised}",
+      "$description": "Card, list container. The default for any surface since 4.2 - it replaces the border."
+    },
+    "floating": {
+      "$value": "{shadow.light.floating}",
+      "$description": "Added in 4.2. A hovered card, a toast."
     },
     "overlay": {
-      "$value": "{shadow.md}"
+      "$value": "{shadow.light.overlay}",
+      "$description": "Menu, popover, listbox."
     },
     "modal": {
-      "$value": "{shadow.lg}"
+      "$value": "{shadow.light.modal}",
+      "$description": "Dialog, side panel."
     }
   },
   "duration": {
@@ -345,6 +370,68 @@
     },
     "toast": {
       "$value": "{layerStep.toast}"
+    }
+  },
+  "fill": {
+    "$description": "Added in 4.2.",
+    "hover": {
+      "$value": "{color.inkAlpha.6}",
+      "$description": "A hovered or active row on a translucent surface. surface.sunken is opaque, and on glass it punches a solid hole in the material."
+    }
+  },
+  "material": {
+    "$description": "Added in 4.2. Translucent surfaces for anything that floats over content. A material is bg + backdrop-filter: blur(var(--bh-material-*-blur)) saturate(var(--bh-material-saturation)), edged with material.rim instead of a border. Only for surfaces that sit over other content: on an empty page, glass is just grey.",
+    "thin": {
+      "bg": {
+        "$value": "{color.glass.light.thin}"
+      },
+      "blur": {
+        "$value": "{blur.md}",
+        "$description": "A control laid over an image."
+      }
+    },
+    "regular": {
+      "bg": {
+        "$value": "{color.glass.light.regular}"
+      },
+      "blur": {
+        "$value": "{blur.lg}",
+        "$description": "Menu, popover, toast."
+      }
+    },
+    "thick": {
+      "bg": {
+        "$value": "{color.glass.light.thick}"
+      },
+      "blur": {
+        "$value": "{blur.xl}",
+        "$description": "Dialog - the most text, so the most opaque."
+      }
+    },
+    "chrome": {
+      "bg": {
+        "$value": "{color.glass.light.chrome}"
+      },
+      "blur": {
+        "$value": "{blur.lg}",
+        "$description": "App bar and sticky headers. Shows through only where content scrolls beneath."
+      }
+    },
+    "saturation": {
+      "$value": "{saturation.vivid}"
+    },
+    "rim": {
+      "$value": "{shadow.rim.light}",
+      "$description": "The lit inner edge of glass. Goes first in the box-shadow list, before the elevation."
+    }
+  },
+  "scrim": {
+    "$description": "Added in 4.2. The layer between a modal and the page. Lighter than the 55% it replaced, because the blur now does the separating.",
+    "bg": {
+      "$value": "{color.inkAlpha.18}"
+    },
+    "blur": {
+      "$value": "{blur.sm}"
     }
   },
   "$extensions": {

@@ -1,5 +1,5 @@
 {
-  "$description": "Dark theme. Colour roles only - every non-colour semantic is shared, because a theme that changes spacing is not a theme.",
+  "$description": "Dark theme. Colour roles, and the roles made of colour - elevation and materials. Every other semantic is shared, because a theme that changes spacing is not a theme.",
   "surface": {
     "base": {
       "$value": "{color.neutral.900}"
@@ -46,6 +46,9 @@
     },
     "focus": {
       "$value": "{color.blue.400}"
+    },
+    "hairline": {
+      "$value": "{color.whiteAlpha.8}"
     }
   },
   "action": {
@@ -133,6 +136,55 @@
       "border": {
         "$value": "{color.red.700}"
       }
+    }
+  },
+  "fill": {
+    "hover": {
+      "$value": "{color.whiteAlpha.8}"
+    }
+  },
+  "elevation": {
+    "raised": {
+      "$value": "{shadow.dark.raised}"
+    },
+    "floating": {
+      "$value": "{shadow.dark.floating}"
+    },
+    "overlay": {
+      "$value": "{shadow.dark.overlay}"
+    },
+    "modal": {
+      "$value": "{shadow.dark.modal}"
+    }
+  },
+  "material": {
+    "thin": {
+      "bg": {
+        "$value": "{color.glass.dark.thin}"
+      }
+    },
+    "regular": {
+      "bg": {
+        "$value": "{color.glass.dark.regular}"
+      }
+    },
+    "thick": {
+      "bg": {
+        "$value": "{color.glass.dark.thick}"
+      }
+    },
+    "chrome": {
+      "bg": {
+        "$value": "{color.glass.dark.chrome}"
+      }
+    },
+    "rim": {
+      "$value": "{shadow.rim.dark}"
+    }
+  },
+  "scrim": {
+    "bg": {
+      "$value": "{color.blackAlpha.32}"
     }
   }
 }

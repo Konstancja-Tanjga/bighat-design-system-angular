@@ -96,7 +96,7 @@
    the pointer is somewhere else. */
 .bh-table tbody tr[data-selected] td,
 .bh-table tbody tr[data-selected]:hover td {
-  background: var(--bh-status-info-bg);
+  background: var(--bh-selection-bg);
 }
 
 .bh-table tfoot td {

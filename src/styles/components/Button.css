@@ -3,15 +3,24 @@
   align-items: center;
   justify-content: center;
   gap: var(--bh-gap-snug);
+  /* A capsule since 4.3, as on iOS: the shape alone says "press me", so
+     nothing has to be outlined. The transparent border stays for forced-colours
+     mode, which drops shadows and paints it. */
   border: 1px solid transparent;
-  border-radius: var(--bh-radius-control);
+  border-radius: var(--bh-radius-pill);
   font-family: var(--bh-font-family);
   font-weight: var(--bh-text-weight-emphasis);
   cursor: pointer;
   transition:
     background-color var(--bh-duration-fast) var(--bh-easing-standard),
-    border-color var(--bh-duration-fast) var(--bh-easing-standard);
+    box-shadow var(--bh-duration-fast) var(--bh-easing-standard),
+    transform var(--bh-duration-fast) var(--bh-easing-standard);
   white-space: nowrap;
+}
+
+/* Pressing gives way under the finger rather than changing colour alone. */
+.bh-button:active:not([aria-disabled='true']):not(:disabled) {
+  transform: scale(0.97);
 }
 
 .bh-button--sm {
@@ -33,6 +42,7 @@
 .bh-button--primary {
   background: var(--bh-action-primary-bg);
   color: var(--bh-action-primary-fg);
+  box-shadow: var(--bh-elevation-control);
 }
 .bh-button--primary:hover:not([aria-disabled='true']):not(:disabled) {
   background: var(--bh-action-primary-bg-hover);
@@ -48,18 +58,45 @@
 .bh-button--primary.bh-button--critical:hover:not([aria-disabled='true']):not(:disabled) {
   background: var(--bh-action-critical-bg-hover);
 }
+/* Outranks .bh-button--primary:active, which otherwise won and turned a
+   pressed critical button green. */
+.bh-button--primary.bh-button--critical:active:not([aria-disabled='true']):not(:disabled) {
+  background: var(--bh-action-critical-bg-hover);
+}
 
 .bh-button--secondary {
-  background: var(--bh-action-secondary-bg);
+  /* Glass since 4.3: the rim and the control shadow draw the edge the 1px
+     border used to. */
+  background: var(--bh-material-regular-bg);
+  backdrop-filter: blur(var(--bh-material-regular-blur)) saturate(var(--bh-material-saturation));
   color: var(--bh-action-secondary-fg);
-  border-color: var(--bh-action-secondary-border);
+  box-shadow: var(--bh-material-rim), var(--bh-elevation-control);
+  position: relative;
+  isolation: isolate;
+}
+/* Hover tints the glass through an overlay rather than a new background: a
+   thicker material is invisible on a white page, and an overlay's opacity can
+   fade where a background-image cannot. The shadow keeps the rest state's
+   layers and adds floating after them, so the list interpolates too. */
+.bh-button--secondary::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--bh-fill-hover);
+  opacity: 0;
+  transition: opacity var(--bh-duration-fast) var(--bh-easing-standard);
+  pointer-events: none;
 }
 .bh-button--secondary:hover:not([aria-disabled='true']):not(:disabled) {
-  background: var(--bh-action-secondary-bg-hover);
+  box-shadow: var(--bh-material-rim), var(--bh-elevation-control), var(--bh-elevation-floating);
+}
+.bh-button--secondary:hover:not([aria-disabled='true']):not(:disabled)::before {
+  opacity: 1;
 }
 .bh-button--secondary.bh-button--critical {
   color: var(--bh-status-critical-fg);
-  border-color: var(--bh-status-critical-fg);
 }
 
 .bh-button--ghost {
@@ -67,7 +104,7 @@
   color: var(--bh-text-primary);
 }
 .bh-button--ghost:hover:not([aria-disabled='true']):not(:disabled) {
-  background: var(--bh-action-secondary-bg-hover);
+  background: var(--bh-fill-hover);
 }
 .bh-button--ghost.bh-button--critical {
   color: var(--bh-status-critical-fg);

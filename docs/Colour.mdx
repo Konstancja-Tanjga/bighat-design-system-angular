@@ -47,10 +47,35 @@ a design system can be broken.
 
 `tone="default"` resolves for the whole 4.x line and is removed in 5.0.
 
+## Selection is not a status
+
+`selection.bg`, `selection.fg` and `selection.mark` — the row the reader
+picked, the destination they are on, the tile that is checked.
+
+Six components used to say that with `status.info`, and it was the wrong role
+by one word. A status is a message the system is making: *this failed*, *this
+saved*, *here is something you should know*. Selection is not news the system
+has; it is the answer to a question the reader just asked by clicking. The two
+happened to want a tint and a border, so one stood in for the other, and the
+tell was that a selected row and an information banner were the same colour —
+a page could not distinguish "you are here" from "we have something to tell
+you".
+
+It cost a change of accent to notice. When the primary action moved from blue
+to green, six components kept a blue current state, and the reason was not that
+blue was hard-coded anywhere: it was that they were pointing at a role that had
+no reason to follow the accent.
+
+`mark` is the leading bar, and it is the part held to 3:1 on its own. The tint
+is the pleasant half of the indication and the first to disappear — in
+greyscale, in forced colours, for anyone who cannot separate two close greens.
+The bar is what survives, which is why it is a token rather than
+`currentColor`.
+
 ## Contrast is a build error
 
-Twenty-six foreground/background pairs are declared in the semantic token
-file's `$extensions` block. `contrast.test.ts` iterates them across both themes
+Twenty-nine foreground/background pairs are declared in the semantic token
+file's `$extensions` block. `src/test/contrast.spec.ts` iterates them across both themes
 and fails the build on any that misses its threshold.
 
 The thresholds are not all 4.5:1, and getting that distinction wrong in either

@@ -218,7 +218,7 @@ export function cssVar(path: TokenPath): string {
 
 /** Raw resolved values, light theme. For tests and documentation, not for components. */
 export const tokens = {
-${merged.map((t) => `  '${t.path}': { light: '${t.light}', dark: '${t.dark}' },`).join('\n')}
+${merged.map((t) => `  '${t.path}': { light: ${JSON.stringify(t.light)}, dark: ${JSON.stringify(t.dark)} },`).join('\n')}
 } as const satisfies Record<TokenPath, { light: string; dark: string }>;
 
 export const contrast = ${JSON.stringify(semantic.$extensions['com.bighat.contrast'], null, 2)} as const;

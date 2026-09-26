@@ -31,7 +31,7 @@
       "$value": "{color.neutral.0}"
     },
     "onAccent": {
-      "$value": "{color.neutral.0}"
+      "$value": "{color.neutral.900}"
     },
     "link": {
       "$value": "{color.blue.600}"
@@ -47,7 +47,7 @@
       "$description": "Boundary of an interactive control. Held to 3:1."
     },
     "focus": {
-      "$value": "{color.blue.500}"
+      "$value": "{color.green.600}"
     },
     "hairline": {
       "$value": "{color.inkAlpha.6}",
@@ -57,16 +57,16 @@
   "action": {
     "primary": {
       "bg": {
-        "$value": "{color.blue.500}"
+        "$value": "{color.green.400}"
       },
       "bgHover": {
-        "$value": "{color.blue.600}"
+        "$value": "{color.green.500}"
       },
       "bgActive": {
-        "$value": "{color.blue.700}"
+        "$value": "{color.green.600}"
       },
       "fg": {
-        "$value": "{color.neutral.0}"
+        "$value": "{color.neutral.900}"
       }
     },
     "secondary": {
@@ -139,6 +139,18 @@
       "border": {
         "$value": "{color.red.200}"
       }
+    }
+  },
+  "selection": {
+    "$description": "Current or chosen \u2014 the row the reader picked, the destination they are on, the tile that is checked. Not a status: status.info is a message the system is making, and using it for selection said \"here is some information\" about a row whose only news is that the user clicked it. mark is the leading bar, and it is what survives greyscale and forced colours when the tint does not.",
+    "bg": {
+      "$value": "{color.green.100}"
+    },
+    "fg": {
+      "$value": "{color.neutral.900}"
+    },
+    "mark": {
+      "$value": "{color.green.700}"
     }
   },
   "control": {
@@ -270,7 +282,8 @@
   },
   "radius": {
     "control": {
-      "$value": "{radius.md}"
+      "$value": "{radius.lg}",
+      "$description": "Rounder in 4.3 (6px \u2192 10px), to sit beside pill buttons and 20px surfaces without looking like a leftover."
     },
     "surface": {
       "$value": "{radius.2xl}",
@@ -313,6 +326,10 @@
     "modal": {
       "$value": "{shadow.light.modal}",
       "$description": "Dialog, side panel."
+    },
+    "control": {
+      "$value": "{shadow.light.control}",
+      "$description": "Added in 4.3. A filled or glass button - the lit edge says it can be pressed, the contact shadow that it sits on the page."
     }
   },
   "duration": {
@@ -528,6 +545,21 @@
           "action.critical.fg",
           "action.critical.bgHover",
           "bodyText"
+        ],
+        [
+          "selection.fg",
+          "selection.bg",
+          "bodyText"
+        ],
+        [
+          "selection.mark",
+          "selection.bg",
+          "nonText"
+        ],
+        [
+          "selection.mark",
+          "surface.base",
+          "nonText"
         ],
         [
           "status.info.fg",

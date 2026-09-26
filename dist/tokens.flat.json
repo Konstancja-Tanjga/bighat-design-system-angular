@@ -49,7 +49,7 @@
     },
     "text.onAccent": {
       "type": "color",
-      "light": "#ffffff",
+      "light": "#14181c",
       "dark": "#14181c"
     },
     "text.link": {
@@ -71,8 +71,8 @@
     },
     "border.focus": {
       "type": "color",
-      "light": "#3563e9",
-      "dark": "#5b87fb"
+      "light": "#159b6b",
+      "dark": "#34d399"
     },
     "border.hairline": {
       "type": "color",
@@ -82,22 +82,22 @@
     },
     "action.primary.bg": {
       "type": "color",
-      "light": "#3563e9",
-      "dark": "#5b87fb"
+      "light": "#34d399",
+      "dark": "#34d399"
     },
     "action.primary.bgHover": {
       "type": "color",
-      "light": "#2148c9",
-      "dark": "#8fb0ff"
+      "light": "#22b57f",
+      "dark": "#6ee7b7"
     },
     "action.primary.bgActive": {
       "type": "color",
-      "light": "#1a39a1",
-      "dark": "#bcd0ff"
+      "light": "#159b6b",
+      "dark": "#a7f3d0"
     },
     "action.primary.fg": {
       "type": "color",
-      "light": "#ffffff",
+      "light": "#14181c",
       "dark": "#14181c"
     },
     "action.secondary.bg": {
@@ -157,13 +157,13 @@
     },
     "status.success.fg": {
       "type": "color",
-      "light": "#0a573b",
+      "light": "#0a7f55",
       "dark": "#6ee7b7"
     },
     "status.success.border": {
       "type": "color",
       "light": "#a7f3d0",
-      "dark": "#0a573b"
+      "dark": "#0a7f55"
     },
     "status.warning.bg": {
       "type": "color",
@@ -194,6 +194,21 @@
       "type": "color",
       "light": "#fecaca",
       "dark": "#a31f24"
+    },
+    "selection.bg": {
+      "type": "color",
+      "light": "#d1fae5",
+      "dark": "#252b32"
+    },
+    "selection.fg": {
+      "type": "color",
+      "light": "#14181c",
+      "dark": "#f7f8f9"
+    },
+    "selection.mark": {
+      "type": "color",
+      "light": "#0a7f55",
+      "dark": "#34d399"
     },
     "control.sm": {
       "type": "dimension",

@@ -58,6 +58,11 @@
 .bh-button--primary.bh-button--critical:hover:not([aria-disabled='true']):not(:disabled) {
   background: var(--bh-action-critical-bg-hover);
 }
+/* Matches the specificity of .bh-button--primary:active, which otherwise wins
+   and turned a pressed critical button green. */
+.bh-button--primary.bh-button--critical:active:not([aria-disabled='true']):not(:disabled) {
+  background: var(--bh-action-critical-bg-hover);
+}
 
 .bh-button--secondary {
   /* Glass since 4.3: the rim and the control shadow draw the edge the 1px
@@ -68,7 +73,11 @@
   box-shadow: var(--bh-material-rim), var(--bh-elevation-control);
 }
 .bh-button--secondary:hover:not([aria-disabled='true']):not(:disabled) {
-  background: var(--bh-material-thick-bg);
+  /* On a white page a thicker material is invisible, so hover tints the glass
+     and lifts it a step: the change reads on any backdrop. */
+  background:
+    linear-gradient(var(--bh-fill-hover), var(--bh-fill-hover)), var(--bh-material-regular-bg);
+  box-shadow: var(--bh-material-rim), var(--bh-elevation-floating);
 }
 .bh-button--secondary.bh-button--critical {
   color: var(--bh-status-critical-fg);

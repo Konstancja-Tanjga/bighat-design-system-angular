@@ -3,15 +3,24 @@
   align-items: center;
   justify-content: center;
   gap: var(--bh-gap-snug);
+  /* A capsule since 4.3, as on iOS: the shape alone says "press me", so
+     nothing has to be outlined. The transparent border stays for forced-colours
+     mode, which drops shadows and paints it. */
   border: 1px solid transparent;
-  border-radius: var(--bh-radius-control);
+  border-radius: var(--bh-radius-pill);
   font-family: var(--bh-font-family);
   font-weight: var(--bh-text-weight-emphasis);
   cursor: pointer;
   transition:
     background-color var(--bh-duration-fast) var(--bh-easing-standard),
-    border-color var(--bh-duration-fast) var(--bh-easing-standard);
+    box-shadow var(--bh-duration-fast) var(--bh-easing-standard),
+    transform var(--bh-duration-fast) var(--bh-easing-standard);
   white-space: nowrap;
+}
+
+/* Pressing gives way under the finger rather than changing colour alone. */
+.bh-button:active:not([aria-disabled='true']):not(:disabled) {
+  transform: scale(0.97);
 }
 
 .bh-button--sm {
@@ -33,6 +42,7 @@
 .bh-button--primary {
   background: var(--bh-action-primary-bg);
   color: var(--bh-action-primary-fg);
+  box-shadow: var(--bh-elevation-control);
 }
 .bh-button--primary:hover:not([aria-disabled='true']):not(:disabled) {
   background: var(--bh-action-primary-bg-hover);
@@ -50,16 +60,18 @@
 }
 
 .bh-button--secondary {
-  background: var(--bh-action-secondary-bg);
+  /* Glass since 4.3: the rim and the control shadow draw the edge the 1px
+     border used to. */
+  background: var(--bh-material-regular-bg);
+  backdrop-filter: blur(var(--bh-material-regular-blur)) saturate(var(--bh-material-saturation));
   color: var(--bh-action-secondary-fg);
-  border-color: var(--bh-action-secondary-border);
+  box-shadow: var(--bh-material-rim), var(--bh-elevation-control);
 }
 .bh-button--secondary:hover:not([aria-disabled='true']):not(:disabled) {
-  background: var(--bh-action-secondary-bg-hover);
+  background: var(--bh-material-thick-bg);
 }
 .bh-button--secondary.bh-button--critical {
   color: var(--bh-status-critical-fg);
-  border-color: var(--bh-status-critical-fg);
 }
 
 .bh-button--ghost {
@@ -67,7 +79,7 @@
   color: var(--bh-text-primary);
 }
 .bh-button--ghost:hover:not([aria-disabled='true']):not(:disabled) {
-  background: var(--bh-action-secondary-bg-hover);
+  background: var(--bh-fill-hover);
 }
 .bh-button--ghost.bh-button--critical {
   color: var(--bh-status-critical-fg);

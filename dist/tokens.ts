@@ -82,6 +82,7 @@ export type TokenPath =
   | 'elevation.floating'
   | 'elevation.overlay'
   | 'elevation.modal'
+  | 'elevation.control'
   | 'duration.instant'
   | 'duration.fast'
   | 'duration.normal'
@@ -194,7 +195,7 @@ export const tokens = {
   'padding.page': { light: '96px', dark: '96px' },
   'padding.gutter': { light: '32px', dark: '32px' },
   'padding.hero': { light: '48px', dark: '48px' },
-  'radius.control': { light: '6px', dark: '6px' },
+  'radius.control': { light: '10px', dark: '10px' },
   'radius.surface': { light: '20px', dark: '20px' },
   'radius.pill': { light: '9999px', dark: '9999px' },
   'radius.indicator': { light: '3px', dark: '3px' },
@@ -205,6 +206,7 @@ export const tokens = {
   'elevation.floating': { light: '0 0 0 1px rgba(20, 24, 28, 0.03), 0 2px 6px rgba(20, 24, 28, 0.06), 0 12px 32px rgba(20, 24, 28, 0.1)', dark: 'inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 2px 6px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45)' },
   'elevation.overlay': { light: '0 0 0 0.5px rgba(20, 24, 28, 0.1), 0 4px 12px rgba(20, 24, 28, 0.06), 0 18px 48px rgba(20, 24, 28, 0.18)', dark: '0 0 0 0.5px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.3), 0 18px 48px rgba(0, 0, 0, 0.55)' },
   'elevation.modal': { light: '0 0 0 0.5px rgba(20, 24, 28, 0.1), 0 8px 20px rgba(20, 24, 28, 0.1), 0 32px 80px rgba(20, 24, 28, 0.28)', dark: '0 0 0 0.5px rgba(0, 0, 0, 0.6), 0 8px 20px rgba(0, 0, 0, 0.35), 0 32px 80px rgba(0, 0, 0, 0.65)' },
+  'elevation.control': { light: 'inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 1px 2px rgba(20, 24, 28, 0.12), 0 3px 8px rgba(20, 24, 28, 0.08)', dark: 'inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 1px 2px rgba(0, 0, 0, 0.4), 0 3px 8px rgba(0, 0, 0, 0.3)' },
   'duration.instant': { light: '80ms', dark: '80ms' },
   'duration.fast': { light: '140ms', dark: '140ms' },
   'duration.normal': { light: '220ms', dark: '220ms' },

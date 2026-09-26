@@ -270,7 +270,8 @@
   },
   "radius": {
     "control": {
-      "$value": "{radius.md}"
+      "$value": "{radius.lg}",
+      "$description": "Rounder in 4.3 (6px \u2192 10px), to sit beside pill buttons and 20px surfaces without looking like a leftover."
     },
     "surface": {
       "$value": "{radius.2xl}",
@@ -313,6 +314,10 @@
     "modal": {
       "$value": "{shadow.light.modal}",
       "$description": "Dialog, side panel."
+    },
+    "control": {
+      "$value": "{shadow.light.control}",
+      "$description": "Added in 4.3. A filled or glass button - the lit edge says it can be pressed, the contact shadow that it sits on the page."
     }
   },
   "duration": {

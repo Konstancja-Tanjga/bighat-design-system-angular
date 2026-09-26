@@ -29,7 +29,7 @@ Nothing to do.
 
 ## border-radius — clean
 
-Target: `--bh-radius-*`. Declared values: 16px, 20px, 26px, 3px, 6px, 9999px.
+Target: `--bh-radius-*`. Declared values: 10px, 16px, 20px, 26px, 3px, 9999px.
 
 Nothing to do.
 
